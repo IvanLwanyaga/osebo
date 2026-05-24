@@ -106,11 +106,12 @@
         <!-- Country Code Picker -->
         <com.hbb20.CountryCodePicker
             android:id="@+id/ccp"
-            android:layout_width="wrap_content"
-            android:layout_height="52dp"
+            android:layout_width="156dp"
+            android:layout_height="58dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_input_box"
             app:ccp_arrowSize="12dp"
             app:ccp_defaultNameCode="UG"
             app:ccp_dialogSearchEnabled="true"
@@ -126,7 +127,6 @@
             android:id="@+id/editTextPhone"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginStart="12dp"
             android:background="@drawable/bg_input_box"
             android:clickable="true"
             android:focusable="true"
@@ -205,6 +205,8 @@
             android:text="Already have an account? "
             android:textColor="#9CA3AF"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editTextText5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button" />
 
@@ -212,7 +214,6 @@
             android:id="@+id/editTextText5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
             android:clickable="true"
             android:text="Login"
             android:textColor="@color/purple"
