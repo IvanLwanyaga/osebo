@@ -6,120 +6,166 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login2)   // ← Keep your layout name
+        setContentView(R.layout.activity_login)
 
-        // Apply window insets (your original code)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Initialize Views
-        val emailLayout = findViewById<TextInputLayout>(R.id.emailLayout)
-        val passwordLayout = findViewById<TextInputLayout>(R.id.passwordLayout)
+        // =========================
+        // Views (FIXED NAMES)
+        // =========================
 
-        val etEmail = findViewById<TextInputEditText>(R.id.etEmail)
-        val etPassword = findViewById<TextInputEditText>(R.id.etPassword)
+        val rbPhone = findViewById<RadioButton>(R.id.rbPhone)
+        val rbEmail = findViewById<RadioButton>(R.id.rbEmail)
 
-        val btnLogin = findViewById<MaterialButton>(R.id.btnLogin)
+        val phoneLayout = findViewById<LinearLayout>(R.id.phoneLayout)
+
+        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etPhone = findViewById<EditText>(R.id.etPhone)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+
+        val btnLogin = findViewById<MaterialButton>(R.id.button)
+
         val tvForgotPassword = findViewById<TextView>(R.id.tvForgotPassword)
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
 
-        // Real-time error clearing
-        etEmail.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) { emailLayout.error = null }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        // =========================
+        // Default state
+        // =========================
 
-        etPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) { passwordLayout.error = null }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        rbPhone.isChecked = true
+        phoneLayout.visibility = View.VISIBLE
+        etEmail.visibility = View.GONE
 
+        // =========================
+        // Switch Login Method
+        // =========================
+
+        rbPhone.setOnClickListener {
+            phoneLayout.visibility = View.VISIBLE
+            etEmail.visibility = View.GONE
+        }
+
+        rbEmail.setOnClickListener {
+            phoneLayout.visibility = View.GONE
+            etEmail.visibility = View.VISIBLE
+        }
+
+        // =========================
+        // Clear errors
+        // =========================
+
+        fun clearError(view: EditText) {
+            view.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    view.error = null
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+        }
+
+        clearError(etEmail)
+        clearError(etPhone)
+        clearError(etPassword)
+
+        // =========================
         // Login Button
+        // =========================
+
         btnLogin.setOnClickListener {
-            if (validateLogin()) {
+
+            if (validateLogin(rbPhone, etEmail, etPhone, etPassword)) {
+
                 btnLogin.isEnabled = false
                 btnLogin.text = "Signing In..."
 
-                // Simulate API call delay
                 Handler(Looper.getMainLooper()).postDelayed({
-                    Toast.makeText(this, "Login Successful! 🎉", Toast.LENGTH_SHORT).show()
 
-                    // TODO: Navigate to your Main/Home Activity
-                    // startActivity(Intent(this, MainActivity::class.java))
-                    // finishAffinity()
+                    Toast.makeText(this, "Login Successful! 🎉", Toast.LENGTH_SHORT).show()
 
                     btnLogin.isEnabled = true
                     btnLogin.text = "Sign In"
-                }, 1800)
+
+                }, 1500)
             }
         }
 
-        // Forgot Password
         tvForgotPassword.setOnClickListener {
             Toast.makeText(this, "Forgot Password feature coming soon", Toast.LENGTH_SHORT).show()
-            // Start ForgotPasswordActivity here later
         }
 
-        // Go to Register
         tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
     }
 
-    private fun validateLogin(): Boolean {
-        var isValid = true
+    // =========================
+    // VALIDATION (FIXED)
+    // =========================
 
-        val emailInput = findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
-        val passwordInput = findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
+    private fun validateLogin(
+        rbPhone: RadioButton,
+        etEmail: EditText,
+        etPhone: EditText,
+        etPassword: EditText
+    ): Boolean {
 
-        val emailLayout = findViewById<TextInputLayout>(R.id.emailLayout)
-        val passwordLayout = findViewById<TextInputLayout>(R.id.passwordLayout)
+        var valid = true
 
-        if (emailInput.isEmpty()) {
-            emailLayout.error = "Email or Phone Number is required"
-            isValid = false
-        } else if (!isValidEmailOrPhone(emailInput)) {
-            emailLayout.error = "Please enter a valid email or phone number"
-            isValid = false
+        val email = etEmail.text.toString().trim()
+        val phone = etPhone.text.toString().trim()
+        val password = etPassword.text.toString().trim()
+
+        if (rbPhone.isChecked) {
+
+            if (phone.isEmpty()) {
+                etPhone.error = "Phone number is required"
+                valid = false
+
+            } else if (!phone.matches(Regex("^\\+?[0-9]{9,15}$"))) {
+                etPhone.error = "Enter a valid phone number"
+                valid = false
+            }
+
         } else {
-            emailLayout.error = null
+
+            if (email.isEmpty()) {
+                etEmail.error = "Email is required"
+                valid = false
+
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etEmail.error = "Enter a valid email"
+                valid = false
+            }
         }
 
-        if (passwordInput.isEmpty()) {
-            passwordLayout.error = "Password is required"
-            isValid = false
-        } else if (passwordInput.length < 6) {
-            passwordLayout.error = "Password must be at least 6 characters"
-            isValid = false
-        } else {
-            passwordLayout.error = null
+        if (password.isEmpty()) {
+            etPassword.error = "Password is required"
+            valid = false
+
+        } else if (password.length < 6) {
+            etPassword.error = "Minimum 6 characters required"
+            valid = false
         }
 
-        return isValid
-    }
-
-    private fun isValidEmailOrPhone(input: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches() ||
-                input.matches(Regex("^\\+?[0-9]{9,15}$"))
+        return valid
     }
 }
