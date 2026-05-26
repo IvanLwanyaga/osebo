@@ -1,8 +1,6 @@
-package com.example.osebo
+package com.osebo.ai
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -12,10 +10,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val btnGetStarted = findViewById<Button>(R.id.btnGetStarted)
-
-        btnGetStarted.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-        }
+        // This should ONLY be dashboard logic
+        // NO navigation back to Register here
     }
 }

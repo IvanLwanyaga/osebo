@@ -1,141 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".OnboardingActivity">
+    android:background="@color/white">
 
-    <!-- Skip Button -->
-
+    <!-- Skip -->
     <TextView
         android:id="@+id/tvSkip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Skip"
-        android:textColor="#1E293B"
         android:textSize="16sp"
+        android:textColor="#1E293B"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Logo Section -->
-
-    <LinearLayout
-        android:id="@+id/logoLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:src="@drawable/osebo"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Osebo"
-            android:textColor="#111827"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginStart="8dp"/>
-
-    </LinearLayout>
-
-    <!-- Main Illustration -->
-
-    <ImageView
-        android:id="@+id/imageIllustration"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="25dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/osebo"
-        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoLayout" />
-
-    <!-- Heading -->
-
-    <TextView
-        android:id="@+id/tvTitle"
+    <!-- ViewPager -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Streamline,\nAutomate,\nGrow!"
-        android:textColor="#1565D8"
-        android:textStyle="bold"
-        android:textSize="42sp"
-        android:lineSpacingExtra="6dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/imageIllustration"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvSkip"
+        app:layout_constraintBottom_toTopOf="@id/dotsLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Description -->
-
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="An all-in-one ERP solution designed for African businesses—manage operations, inventory, sales, finance, and HR from one unified platform."
-        android:textColor="#64748B"
-        android:textSize="18sp"
-        android:lineSpacingExtra="4dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Indicators -->
-
+    <!-- Dots -->
     <LinearLayout
         android:id="@+id/dotsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/btnNext"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/dot_active"/>
-
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/dot_inactive"/>
-
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/dot_inactive"/>
-
-    </LinearLayout>
-
-    <!-- Next Button -->
-
+    <!-- Next -->
     <ImageButton
         android:id="@+id/btnNext"
         android:layout_width="65dp"
@@ -144,10 +48,23 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_circle_blue"
         android:src="@drawable/ic_arrow_right"
-        android:padding="18dp"
-        android:scaleType="centerInside"
         android:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Get Started -->
+    <Button
+        android:id="@+id/btnGetStarted"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:text="Get Started"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:visibility="gone"
+        android:background="@drawable/bg_circle_blue"
+        android:layout_margin="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

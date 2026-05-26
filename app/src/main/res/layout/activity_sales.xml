@@ -2,19 +2,24 @@
     android:layout_width="0dp"
     android:layout_weight="1"
     android:layout_height="100dp"
-    android:margin="6dp"
+    android:layout_margin="16dp"
     android:orientation="vertical"
     android:padding="12dp"
     android:background="@drawable/bg_input_box">
 
     <TextView
         android:text="Today's Sales"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/tvsaless"
         android:textSize="12sp"
         android:textColor="#6B7280"/>
 
     <TextView
         android:id="@+id/tvSales"
         android:text="UGX 0"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#111827"/>

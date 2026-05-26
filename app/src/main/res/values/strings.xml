@@ -1,8 +1,24 @@
-<string-array name="titles_array">
-    <item>Mr</item>
-    <item>Mrs</item>
-    <item>Miss</item>
-    <item>Dr</item>
-    <item>Prof</item>
-    <item>Other</item>
-</string-array>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- APP NAME -->
+    <string name="app_name">Osebo AI</string>
+
+    <!-- GENERAL -->
+    <string name="welcome">Welcome</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="phone">Phone Number</string>
+    <string name="contact_us">Contact Us</string>
+
+    <!-- TITLES -->
+    <string-array name="titles">
+        <item>Mr</item>
+        <item>Mrs</item>
+        <item>Miss</item>
+        <item>Dr</item>
+    </string-array>
+
+</resources>

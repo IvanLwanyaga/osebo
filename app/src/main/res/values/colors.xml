@@ -11,5 +11,6 @@
     <color name="textDark">#111827</color>
     <color name="textLight">#6B7280</color>
     <color name="gray">#898989</color>
+    <color name="whyt">#FFFFFF</color>
 
 </resources>

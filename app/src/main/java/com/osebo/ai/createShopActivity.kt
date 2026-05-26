@@ -29,8 +29,7 @@ class CreateShopActivity : AppCompatActivity() {
         // =======================
 
         val etShopName = findViewById<EditText>(R.id.etShopName)
-        val spinnerCategory = findViewById<Spinner>(R.id.spinnerCategory)
-        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val spinnerCategory = findViewById<Spinner>(R.id.spinnerBusinessType)
         val etPhone = findViewById<EditText>(R.id.etPhone)
         val etLocation = findViewById<EditText>(R.id.etLocation)
         val etDescription = findViewById<EditText>(R.id.etDescription)
@@ -75,7 +74,6 @@ class CreateShopActivity : AppCompatActivity() {
 
             val shopName = etShopName.text.toString().trim()
             val category = spinnerCategory.selectedItem.toString()
-            val email = etEmail.text.toString().trim()
             val phone = etPhone.text.toString().trim()
             val location = etLocation.text.toString().trim()
             val description = etDescription.text.toString().trim()
@@ -93,18 +91,6 @@ class CreateShopActivity : AppCompatActivity() {
 
             if (category == "Select Category") {
                 Toast.makeText(this, "Select a category", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (email.isEmpty()) {
-                etEmail.error = "Email required"
-                etEmail.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Invalid email"
-                etEmail.requestFocus()
                 return@setOnClickListener
             }
 

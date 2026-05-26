@@ -2,13 +2,10 @@ package com.osebo.ai
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Patterns
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,282 +21,121 @@ class RegisterActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_register)
 
-        // =========================
-        // Window Insets
-        // =========================
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-
-            val systemBars =
-                insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            v.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
-
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // =========================
-        // Initialize Views
-        // =========================
+        // Views
+        val spinnerTitle = findViewById<Spinner>(R.id.spinnerTitle)
+        val etFirstName = findViewById<EditText>(R.id.editTextText)
+        val etLastName = findViewById<EditText>(R.id.editTextText2)
+        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etPhone = findViewById<EditText>(R.id.editTextPhone)
+        val etPassword = findViewById<EditText>(R.id.editTextTextPassword)
+        val etConfirmPassword = findViewById<EditText>(R.id.editTextTextPassword2)
+        val ccp = findViewById<CountryCodePicker>(R.id.ccp)
+        val cbTerms = findViewById<CheckBox>(R.id.cbTerms)
+        val btnSendOtp = findViewById<MaterialButton>(R.id.button)
+        val tvLogin = findViewById<TextView>(R.id.editTextText5)
 
-        val spinnerTitle =
-            findViewById<Spinner>(R.id.spinnerTitle)
-
-        val etFirstName =
-            findViewById<EditText>(R.id.editTextText)
-
-        val etLastName =
-            findViewById<EditText>(R.id.editTextText2)
-
-        val etEmail =
-            findViewById<EditText>(R.id.etEmail)
-
-        val etPhone =
-            findViewById<EditText>(R.id.editTextPhone)
-
-        val etPassword =
-            findViewById<EditText>(R.id.editTextTextPassword)
-
-        val etConfirmPassword =
-            findViewById<EditText>(R.id.editTextTextPassword2)
-
-        val ccp =
-            findViewById<CountryCodePicker>(R.id.ccp)
-
-        val cbTerms =
-            findViewById<CheckBox>(R.id.cbTerms)
-
-        val btnSendOtp =
-            findViewById<MaterialButton>(R.id.button)
-
-        val tvLogin =
-            findViewById<TextView>(R.id.editTextText5)
-
-        // =========================
-        // Spinner Setup
-        // =========================
-
-        val titles = arrayOf(
-            "Mr",
-            "Mrs",
-            "Miss",
-            "Dr",
-            "Prof",
-            "Rev",
-            "Other"
-        )
-
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            titles
-        )
-
-        adapter.setDropDownViewResource(
-            android.R.layout.simple_spinner_dropdown_item
-        )
-
+        // Spinner setup
+        val titles = arrayOf("Mr", "Mrs", "Miss", "Dr", "Prof", "Rev", "Other")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, titles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTitle.adapter = adapter
-
-        // Default Title = Mr
         spinnerTitle.setSelection(0)
 
         // =========================
-        // Send OTP Button
+        // REGISTER BUTTON
         // =========================
 
         btnSendOtp.setOnClickListener {
 
-            val selectedTitle =
-                spinnerTitle.selectedItem.toString()
+            val selectedTitle = spinnerTitle.selectedItem.toString()
+            val firstName = etFirstName.text.toString().trim()
+            val lastName = etLastName.text.toString().trim()
+            val email = etEmail.text.toString().trim()
+            val phone = etPhone.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+            val confirmPassword = etConfirmPassword.text.toString().trim()
+            val fullPhoneNumber = ccp.selectedCountryCodeWithPlus + phone
 
-            val firstName =
-                etFirstName.text.toString().trim()
-
-            val lastName =
-                etLastName.text.toString().trim()
-
-            val email =
-                etEmail.text.toString().trim()
-
-            val phone =
-                etPhone.text.toString().trim()
-
-            val password =
-                etPassword.text.toString().trim()
-
-            val confirmPassword =
-                etConfirmPassword.text.toString().trim()
-
-            val fullPhoneNumber =
-                ccp.selectedCountryCodeWithPlus + phone
-
-            // =========================
-            // Validation
-            // =========================
-
+            // VALIDATION
             if (firstName.isEmpty()) {
-
-                etFirstName.error =
-                    "First name is required"
-
-                etFirstName.requestFocus()
+                etFirstName.error = "First name is required"
                 return@setOnClickListener
             }
 
             if (lastName.isEmpty()) {
-
-                etLastName.error =
-                    "Last name is required"
-
-                etLastName.requestFocus()
+                etLastName.error = "Last name is required"
                 return@setOnClickListener
             }
 
             if (email.isEmpty()) {
-
-                etEmail.error =
-                    "Email is required"
-
-                etEmail.requestFocus()
+                etEmail.error = "Email is required"
                 return@setOnClickListener
             }
 
-            if (!Patterns.EMAIL_ADDRESS
-                    .matcher(email)
-                    .matches()
-            ) {
-
-                etEmail.error =
-                    "Enter a valid email address"
-
-                etEmail.requestFocus()
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etEmail.error = "Enter a valid email address"
                 return@setOnClickListener
             }
 
             if (phone.isEmpty()) {
-
-                etPhone.error =
-                    "Phone number is required"
-
-                etPhone.requestFocus()
+                etPhone.error = "Phone number is required"
                 return@setOnClickListener
             }
 
             if (phone.length < 9) {
-
-                etPhone.error =
-                    "Enter a valid phone number"
-
-                etPhone.requestFocus()
+                etPhone.error = "Enter a valid phone number"
                 return@setOnClickListener
             }
 
             if (password.isEmpty()) {
-
-                etPassword.error =
-                    "Password is required"
-
-                etPassword.requestFocus()
+                etPassword.error = "Password is required"
                 return@setOnClickListener
             }
 
             if (password.length < 6) {
-
-                etPassword.error =
-                    "Password must be at least 6 characters"
-
-                etPassword.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (confirmPassword.isEmpty()) {
-
-                etConfirmPassword.error =
-                    "Please confirm your password"
-
-                etConfirmPassword.requestFocus()
+                etPassword.error = "Password must be at least 6 characters"
                 return@setOnClickListener
             }
 
             if (password != confirmPassword) {
-
-                etConfirmPassword.error =
-                    "Passwords do not match"
-
-                etConfirmPassword.requestFocus()
+                etConfirmPassword.error = "Passwords do not match"
                 return@setOnClickListener
             }
-
-            // =========================
-            // Terms & Conditions
-            // =========================
 
             if (!cbTerms.isChecked) {
-
-                Toast.makeText(
-                    this,
-                    "Please accept Terms and Conditions",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, "Please accept Terms and Conditions", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // =========================
-            // Success Message
-            // =========================
-
-            Toast.makeText(
-                this,
-                "OTP sent to $fullPhoneNumber",
-                Toast.LENGTH_LONG
-            ).show()
+            // SUCCESS
+            Toast.makeText(this, "OTP sent to $fullPhoneNumber", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Welcome $selectedTitle $firstName", Toast.LENGTH_SHORT).show()
 
             // =========================
-            // Example Welcome Message
+            // NAVIGATE TO LOGIN (FIXED)
             // =========================
 
-            Toast.makeText(
-                this,
-                "Welcome $selectedTitle $firstName",
-                Toast.LENGTH_SHORT
-            ).show()
+            Handler(Looper.getMainLooper()).postDelayed({
 
-            // =========================
-            // TODO:
-            // Navigate to OTP Screen
-            // =========================
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish() // prevents back navigation to register
 
-            /*
-            val intent =
-                Intent(this, VerifyOtpActivity::class.java)
-
-            intent.putExtra("phone", fullPhoneNumber)
-
-            startActivity(intent)
-            */
-
+            }, 1000)
         }
 
         // =========================
-        // Go To Login Screen
+        // GO TO LOGIN
         // =========================
 
         tvLogin.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    LoginActivity::class.java
-                )
-            )
-
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }

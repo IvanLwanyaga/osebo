@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/Osebo"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="Osebo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Osebo">
-        <activity
-            android:name=".card_balance"
-            android:exported="false" />
-        <activity
-            android:name=".createShopActivity"
-            android:exported="false" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".SuplierActivity" />
-        <activity android:name=".CustomersActivity" />
-        <activity android:name=".ReportsActivity" />
-        <activity android:name=".HRActivity" />
-        <activity android:name=".FinanceActivity" />
-        <activity android:name=".SalesActivity" />
-        <activity android:name=".inventoryActivity" />
-        <activity android:name=".DashBoardActivity" />
-        <activity android:name=".OnboardingAcivity" />
-        <activity android:name=".Activity_Register" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" /> <!-- ONLY LAUNCHER ACTIVITY -->
+
+        <!-- SPLASH (ENTRY POINT) -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
+
+        <!-- FIRST SCREEN AFTER SPLASH -->
+        <activity android:name=".LoginActivity" />
+
+        <activity android:name=".RegisterActivity" />
+
+        <activity android:name=".DashboardActivity"/>
+
     </application>
 
 </manifest>

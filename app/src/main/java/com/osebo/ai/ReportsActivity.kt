@@ -1,8 +1,8 @@
-package com.osebo.erp.activities
+package com.osebo.ai
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.osebo.erp.R
+
 
 class ReportsActivity : AppCompatActivity() {
 
