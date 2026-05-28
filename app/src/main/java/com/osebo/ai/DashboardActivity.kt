@@ -1,154 +1,63 @@
 package com.osebo.ai
 
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.github.mikephil.charting.charts.LineChart
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.osebo.ai.databinding.ActivityDashboardBinding
 
 class DashboardActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDashboardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_dashboard)
+        setupRecyclerViews()
+    }
 
-        // =========================
-        // TOOLBAR
-        // =========================
+    private fun setupRecyclerViews() {
+        // Shops RecyclerView
+        binding.recyclerShops.layoutManager = LinearLayoutManager(this)
+        val shopAdapter = ShopAdapter(getSampleShops())
+        binding.recyclerShops.adapter = shopAdapter
 
-        val toolbar =
-            findViewById<Toolbar>(R.id.toolbar)
+        // Recent Activity RecyclerView
+        binding.recyclerRecent.layoutManager = LinearLayoutManager(this)
+        val activityAdapter = RecentActivityAdapter(getSampleActivities())
+        binding.recyclerRecent.adapter = activityAdapter
+    }
 
-        setSupportActionBar(toolbar)
+    private fun getSampleShops(): List<Shop> {
+        return listOf(
+            Shop("Main Street Store", "48 products • 12 staff", "KSh 8,120", "↑ 8%", "#F3E8FF"),
+            Shop("Fashion Hub", "32 products • 6 staff", "KSh 5,470", "↑ 3.5%", "#FCE7F3"),
+            Shop("Fresh Butchery", "20 items • 4 staff", "KSh 4,860", "↑ 1.2%", "#E0F2FE")
+        )
+    }
 
-        // =========================
-        // USERNAME
-        // =========================
-
-        val tvUserName =
-            findViewById<TextView>(R.id.tvUserName)
-
-        tvUserName.text =
-            "Welcome Back 👋"
-
-        // =========================
-        // BUTTONS
-        // =========================
-
-        val btnAddShop =
-            findViewById<MaterialButton>(R.id.btnAddShop)
-
-        val btnReports =
-            findViewById<MaterialButton>(R.id.btnReports)
-
-        val fabAdd =
-            findViewById<FloatingActionButton>(R.id.fabAdd)
-
-        btnAddShop.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "Add Shop Clicked",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        btnReports.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "Reports Opened",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        fabAdd.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "Floating Action Button Clicked",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        // =========================
-        // LINE CHART
-        // =========================
-
-        val lineChart =
-            findViewById<LineChart>(R.id.lineChart)
-
-        lineChart.description.isEnabled = false
-
-        lineChart.setTouchEnabled(true)
-
-        lineChart.animateX(1000)
-
-        // =========================
-        // RECYCLER VIEW
-        // =========================
-
-        val rvShops =
-            findViewById<RecyclerView>(R.id.rvShops)
-
-        rvShops.layoutManager =
-            LinearLayoutManager(this)
-
-        // =========================
-        // BOTTOM NAVIGATION
-        // =========================
-
-        val bottomNavigation =
-            findViewById<BottomNavigationView>(
-                R.id.bottomNavigation
-            )
-
-        bottomNavigation.setOnItemSelectedListener {
-
-            when (it.itemId) {
-
-                R.id.nav_home -> {
-
-                    Toast.makeText(
-                        this,
-                        "Home",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    true
-                }
-
-                R.id.nav_sales -> {
-
-                    Toast.makeText(
-                        this,
-                        "Sales",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    true
-                }
-
-                R.id.nav_profile -> {
-
-                    Toast.makeText(
-                        this,
-                        "Profile",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    true
-                }
-
-                else -> false
-            }
-        }
+    private fun getSampleActivities(): List<RecentActivity> {
+        return listOf(
+            RecentActivity("Sale — Main Street", "10:34 AM • Shoes x2", "+KSh 3,200", true),
+            RecentActivity("Expense — Rent", "09:15 AM • Fashion Hub", "-KSh 1,500", false),
+            RecentActivity("Sale — Butchery", "08:02 AM • Beef x5kg", "+KSh 750", true)
+        )
     }
 }
+
+// Data Models
+data class Shop(
+    val name: String,
+    val info: String,
+    val sales: String,
+    val growth: String,
+    val color: String
+)
+
+data class RecentActivity(
+    val title: String,
+    val time: String,
+    val amount: String,
+    val isPositive: Boolean
+)

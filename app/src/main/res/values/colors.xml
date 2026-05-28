@@ -12,5 +12,13 @@
     <color name="textLight">#6B7280</color>
     <color name="gray">#898989</color>
     <color name="whyt">#FFFFFF</color>
+    <color name="purple_primary">#6B21B6</color>
+    <color name="purple_light">#F3E8FF</color>
+    <color name="text_primary">#1E2937</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="success">#10B981</color>
+    <color name="danger">#EF4444</color>
+    <color name="bottom_nav_selected">#6B21B6</color>
+    <color name="bottom_nav_unselected">#94A3B8</color>
 
 </resources>
