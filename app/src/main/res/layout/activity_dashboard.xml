@@ -1,269 +1,488 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:background="#F8F9FC"
+    tools:context=".DashboardActivity">
 
-    <!-- APP BAR -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:elevation="2dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#FFFFFF"
-            app:title="Osebo Dashboard"
-            app:titleTextColor="#111827"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- MAIN CONTENT -->
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollDashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp"
-            android:paddingBottom="100dp">
+            android:orientation="vertical">
 
-            <!-- TOP HEADER -->
+            <!-- Top Bar -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:elevation="6dp"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/txtLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="osebo"
+                    android:textColor="#6B21B6"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    app:cardBackgroundColor="#6B21B6"
+                    app:cardCornerRadius="21dp"
+                    app:cardElevation="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="JO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <!-- TEXT -->
+                <!-- Greeting -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Welcome Back 👋"
-                        android:textColor="#111827"
-                        android:textSize="26sp"
+                        android:text="Good morning,"
+                        android:textColor="#64748B"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="James Osebo"
+                        android:textColor="#1E2937"
+                        android:textSize="28sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <!-- Date -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="12dp"
+                    app:cardBackgroundColor="#F3E8FF"
+                    app:cardCornerRadius="999dp"
+                    app:strokeColor="#E0D4FF"
+                    app:strokeWidth="1dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Thu 28 May"
+                        android:textColor="#6B21B6"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Search -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="24dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_search"
+                            app:tint="#94A3B8"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Search products, sales or shops..."
+                            android:paddingStart="12dp"
+                            android:textColor="#1E2937"
+                            android:textColorHint="#94A3B8"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Quick Actions -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:text="New Sale"
+                        android:textAllCaps="false"
+                        android:textStyle="bold"
+                        app:backgroundTint="#6B21B6"
+                        app:cornerRadius="14dp"
+                        app:icon="@drawable/ic_cart"
+                        app:iconSize="20dp"/>
+
+                    <Space android:layout_width="12dp" android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:text="Add Shop"
+                        android:textAllCaps="false"
+                        android:textStyle="bold"
+                        app:backgroundTint="#F3E8FF"
+                        app:cornerRadius="14dp"
+                        app:iconTint="#6B21B6"
+                        app:strokeColor="#D8B4FE"
+                        app:strokeWidth="1.5dp"/>
+
+                    <Space android:layout_width="12dp" android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:text="Reports"
+                        android:textAllCaps="false"
+                        android:textStyle="bold"
+                        app:backgroundTint="#10B981"
+                        app:cornerRadius="14dp"/>
+                </LinearLayout>
+
+                <!-- Business Overview -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Business Overview"
+                        android:textColor="#1E2937"
+                        android:textSize="22sp"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Manage your business smarter with Osebo"
-                        android:textColor="#6B7280"
-                        android:textSize="15sp"/>
-
+                        android:text="Today"
+                        android:textColor="#6B21B6"
+                        android:textStyle="bold"/>
                 </LinearLayout>
 
-                <!-- FLOATING OSEBO IMAGE -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:cardCornerRadius="35dp"
-                    app:cardElevation="6dp">
+                <!-- Stats Grid (4 Cards) -->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:columnCount="2"
+                    android:rowCount="2"
+                    android:horizontalSpacing="12dp"
+                    android:verticalSpacing="12dp">
 
-                    <ImageView
+                    <!-- Sales -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Today sales"
+                                android:textColor="#64748B"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="KSh 18,450"
+                                android:textColor="#1E2937"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="↑ 12% vs yesterday"
+                                android:textColor="#10B981"
+                                android:textSize="13sp"
+                                android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Expenses -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Expenses"
+                                android:textColor="#64748B"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="KSh 4,200"
+                                android:textColor="#1E2937"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="↓ 5% vs yesterday"
+                                android:textColor="#EF4444"
+                                android:textSize="13sp"
+                                android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Net Profit -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Net profit"
+                                android:textColor="#64748B"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="KSh 14,250"
+                                android:textColor="#1E2937"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="↑ 18% vs yesterday"
+                                android:textColor="#10B981"
+                                android:textSize="13sp"
+                                android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Total Shops -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total shops"
+                                android:textColor="#64748B"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4"
+                                android:textColor="#1E2937"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 new this month"
+                                android:textColor="#6B21B6"
+                                android:textSize="13sp"
+                                android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </GridLayout>
+
+                <!-- Performance Analytics -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Performance analytics"
+                    android:textColor="#1E2937"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="32dp"/>
+
+                <!-- You can add a chart library like MPAndroidChart here -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp">
+
+                    <!-- Placeholder for Line Chart -->
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/osebo"/>
-
+                        android:text="📈 Line Chart Here\n(Sales vs Expenses)"
+                        android:gravity="center"
+                        android:textColor="#94A3B8"/>
                 </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
-
-            <!-- SEARCH -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSearch"
+                <!-- Your Shops -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="10dp"
-                    android:hint="Search products, sales or shops"
-                    android:paddingStart="10dp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center_vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Your shops"
+                        android:textColor="#1E2937"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
 
-            <!-- QUICK ACTIONS -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Manage →"
+                        android:textColor="#6B21B6"
+                        android:textStyle="bold"/>
+                </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddShop"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:text="Add Shop"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_shops"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"/>
+
+                <!-- Recent Activity -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent activity"
+                    android:textColor="#1E2937"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:backgroundTint="#6D28D9"
-                    app:cornerRadius="14dp"
-                    app:icon="@drawable/ic_add"
-                    app:iconGravity="textStart"/>
+                    android:layout_marginTop="32dp"/>
 
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnReports"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:text="Reports"
-                    android:textAllCaps="false"
-                    android:textColor="#6D28D9"
-                    android:textStyle="bold"
-                    android:backgroundTint="#EDE9FE"
-                    app:cornerRadius="14dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_recent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"/>
+                <!-- Add RecyclerView for shops and recent activity here -->
 
             </LinearLayout>
-
-            <!-- KPI TITLE -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:text="Business Overview"
-                android:textColor="#111827"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <!-- KPI ROW 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:orientation="horizontal">
-
-                <include
-                    android:id="@+id/cardTodaySales"
-                    layout="@layout/card_kpi"/>
-
-                <include
-                    android:id="@+id/cardTodayExpenses"
-                    layout="@layout/card_kpi"/>
-
-            </LinearLayout>
-
-            <!-- KPI ROW 2 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
-
-                <include
-                    android:id="@+id/cardTodayBalance"
-                    layout="@layout/card_kpi"/>
-
-                <include
-                    android:id="@+id/cardTotalShops"
-                    layout="@layout/card_kpi"/>
-
-            </LinearLayout>
-
-            <!-- PERFORMANCE -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Performance Analytics"
-                android:textColor="#111827"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabPerformance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:tabIndicatorColor="#6D28D9"
-                app:tabSelectedTextColor="#6D28D9"/>
-
-            <!-- CHART -->
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bd_card"/>
-
-            <!-- SHOPS -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:text="Your Shops"
-                android:textColor="#111827"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvShops"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:nestedScrollingEnabled="false"/>
-
         </LinearLayout>
+    </NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- FLOATING ACTION BUTTON -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="90dp"
-        android:src="@drawable/ic_add"
-        android:tint="#FFFFFF"
-        app:backgroundTint="#6D28D9"/>
-
-    <!-- BOTTOM NAVIGATION -->
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#FFFFFF"
-        app:itemIconTint="#6D28D9"
-        app:itemTextColor="#6D28D9"
-        app:menu="@menu/bottom_nav_menu"/>
-
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/bottom_nav_selected"
+        app:itemIconTint="@color/bottom_nav_unselected"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
