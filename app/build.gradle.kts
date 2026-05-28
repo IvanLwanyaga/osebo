@@ -6,6 +6,11 @@ android {
     namespace = "com.osebo.ai"
     compileSdk = 34
 
+        buildFeatures {
+            viewBinding
+        }
+
+
     defaultConfig {
         applicationId = "com.osebo.ai"
         minSdk = 24
@@ -47,7 +52,6 @@ dependencies {
     implementation("com.hbb20:ccp:2.7.3")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
