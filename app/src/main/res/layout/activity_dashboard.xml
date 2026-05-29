@@ -89,7 +89,7 @@
                         android:orientation="vertical"
                         android:padding="24dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Balance"
@@ -196,7 +196,7 @@
                         app:cardCornerRadius="20dp"
                         app:cardElevation="3dp">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
@@ -216,6 +216,7 @@
                                 android:textStyle="bold"/>
                         </LinearLayout>
 
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
@@ -332,7 +333,14 @@
                                 android:textStyle="bold"/>
                         </LinearLayout>
 
-                    </com.google.android.material.card.MaterialCardView>
+                        <include
+                            android:id="@+id/card_total_shops"
+                            layout="@layout/view_stat_card"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_marginStart="6dp" />
+                    </GridLayout>
 
                     <!-- CARD 2 -->
                     <com.google.android.material.card.MaterialCardView
