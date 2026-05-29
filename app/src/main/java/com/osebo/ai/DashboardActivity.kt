@@ -8,7 +8,6 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.osebo.ai.activities.ShopsActivity
 import com.osebo.ai.adapters.ShopAdapter
 import com.osebo.ai.databinding.ActivityDashboardBinding
-import com.osebo.ai.models.Shop
 import com.osebo.ai.utils.FirebaseHelper
 
 class DashboardActivity : AppCompatActivity() {
@@ -20,6 +19,7 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -37,42 +37,50 @@ class DashboardActivity : AppCompatActivity() {
     private fun loadShops() {
         listener = FirebaseHelper.firestore.collection("shops")
             .addSnapshotListener { value, error ->
-                if (error != null) {
-                    return@addSnapshotListener
-                }
+                if (error != null) return@addSnapshotListener
 
                 shopList.clear()
-                value?.documents?.forEach { document ->
-                    val shop = document.toObject(Shop::class.java)
-                    if (shop != null) {
-                        shopList.add(shop)
-                    }
+
+                value?.documents?.forEach { doc ->
+                    val shop = doc.toObject(Shop::class.java)
+                    if (shop != null) shopList.add(shop)
                 }
+
                 shopAdapter.notifyDataSetChanged()
-                binding.txtTotalShops.text = "(${shopList.size})"
+                binding.txtTotalShops.text = shopList.size.toString()
             }
     }
 
     private fun setupBottomNavigation() {
+
         binding.bottomNav.setOnItemSelectedListener { item ->
+
             when (item.itemId) {
-                R.id.nav_home -> true
-                R.id.nav_all_shops -> {
-                    startActivity(Intent(this, ShopsActivity::class.java))
+
+                R.id.nav_home -> {
                     true
                 }
+
                 R.id.nav_sales -> {
                     startActivity(Intent(this, SalesActivity::class.java))
                     true
                 }
+
                 R.id.nav_inventory -> {
                     startActivity(Intent(this, InventoryActivity::class.java))
                     true
                 }
+
                 R.id.nav_reports -> {
                     startActivity(Intent(this, ReportsActivity::class.java))
                     true
                 }
+
+                R.id.nav_more -> {
+                    startActivity(Intent(this, ShopsActivity::class.java))
+                    true
+                }
+
                 else -> false
             }
         }

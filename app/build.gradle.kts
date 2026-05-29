@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
-
+    id("com.android.application")
+    id("com.google.gms.google-services")
+    alias(libs.plugins.kotlin.android)
 
 }
 
@@ -35,6 +36,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
     buildFeatures {
