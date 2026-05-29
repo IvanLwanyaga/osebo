@@ -14,11 +14,22 @@
     <color name="whyt">#FFFFFF</color>
     <color name="purple_primary">#6B21B6</color>
     <color name="purple_light">#F3E8FF</color>
-    <color name="text_primary">#1E2937</color>
-    <color name="text_secondary">#64748B</color>
+    <color name="secondary">#64748B</color>
     <color name="success">#10B981</color>
     <color name="danger">#EF4444</color>
     <color name="bottom_nav_selected">#6B21B6</color>
     <color name="bottom_nav_unselected">#94A3B8</color>
+    <!-- Primary Brand Colors -->
+    <color name="colorPrimary">#6B21B6</color>
+    <color name="colorPrimaryDark">#4C1D95</color>
+    <color name="colorAccent">#A855F7</color>
+
+    <!-- Backgrounds -->
+    <color name="backgrnd">#F8FAFC</color>
+    <color name="surface">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1E2937</color>
+    <color name="text_secondary">#64748B</color>
 
 </resources>

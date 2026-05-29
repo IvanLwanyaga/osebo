@@ -1,63 +1,85 @@
 package com.osebo.ai
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.ListenerRegistration
+import com.osebo.ai.activities.ShopsActivity
+import com.osebo.ai.adapters.ShopAdapter
 import com.osebo.ai.databinding.ActivityDashboardBinding
+import com.osebo.ai.models.Shop
+import com.osebo.ai.utils.FirebaseHelper
 
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
+    private val shopList = mutableListOf<Shop>()
+    private lateinit var shopAdapter: ShopAdapter
+    private var listener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupRecyclerViews()
+        setupRecyclerView()
+        loadShops()
+        setupBottomNavigation()
     }
 
-    private fun setupRecyclerViews() {
-        // Shops RecyclerView
+    private fun setupRecyclerView() {
+        shopAdapter = ShopAdapter(shopList)
         binding.recyclerShops.layoutManager = LinearLayoutManager(this)
-        val shopAdapter = ShopAdapter(getSampleShops())
         binding.recyclerShops.adapter = shopAdapter
-
-        // Recent Activity RecyclerView
-        binding.recyclerRecent.layoutManager = LinearLayoutManager(this)
-        val activityAdapter = RecentActivityAdapter(getSampleActivities())
-        binding.recyclerRecent.adapter = activityAdapter
     }
 
-    private fun getSampleShops(): List<Shop> {
-        return listOf(
-            Shop("Main Street Store", "48 products • 12 staff", "KSh 8,120", "↑ 8%", "#F3E8FF"),
-            Shop("Fashion Hub", "32 products • 6 staff", "KSh 5,470", "↑ 3.5%", "#FCE7F3"),
-            Shop("Fresh Butchery", "20 items • 4 staff", "KSh 4,860", "↑ 1.2%", "#E0F2FE")
-        )
+    private fun loadShops() {
+        listener = FirebaseHelper.firestore.collection("shops")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+
+                shopList.clear()
+                value?.documents?.forEach { document ->
+                    val shop = document.toObject(Shop::class.java)
+                    if (shop != null) {
+                        shopList.add(shop)
+                    }
+                }
+                shopAdapter.notifyDataSetChanged()
+                binding.txtTotalShops.text = "(${shopList.size})"
+            }
     }
 
-    private fun getSampleActivities(): List<RecentActivity> {
-        return listOf(
-            RecentActivity("Sale — Main Street", "10:34 AM • Shoes x2", "+KSh 3,200", true),
-            RecentActivity("Expense — Rent", "09:15 AM • Fashion Hub", "-KSh 1,500", false),
-            RecentActivity("Sale — Butchery", "08:02 AM • Beef x5kg", "+KSh 750", true)
-        )
+    private fun setupBottomNavigation() {
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> true
+                R.id.nav_all_shops -> {
+                    startActivity(Intent(this, ShopsActivity::class.java))
+                    true
+                }
+                R.id.nav_sales -> {
+                    startActivity(Intent(this, SalesActivity::class.java))
+                    true
+                }
+                R.id.nav_inventory -> {
+                    startActivity(Intent(this, InventoryActivity::class.java))
+                    true
+                }
+                R.id.nav_reports -> {
+                    startActivity(Intent(this, ReportsActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        listener?.remove()
     }
 }
-
-// Data Models
-data class Shop(
-    val name: String,
-    val info: String,
-    val sales: String,
-    val growth: String,
-    val color: String
-)
-
-data class RecentActivity(
-    val title: String,
-    val time: String,
-    val amount: String,
-    val isPositive: Boolean
-)

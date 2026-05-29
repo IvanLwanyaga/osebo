@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "673091722762",
+    "project_id": "osebo-9d81d",
+    "storage_bucket": "osebo-9d81d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673091722762:android:6cb7eaec447897b3f089f3",
+        "android_client_info": {
+          "package_name": "com.osebo.ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9Tg3k2_QwgOHn8tgNLl3dMWMl_2kEWDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
