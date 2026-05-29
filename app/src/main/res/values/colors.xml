@@ -31,5 +31,19 @@
     <!-- Text Colors -->
     <color name="text_primary">#1E2937</color>
     <color name="text_secondary">#64748B</color>
+    <color name="ripple_color">#1A000000</color>
+    <color name="bg_page">#F8F9FA</color>
+    <color name="text_muted">#6B7280</color>
+    <color name="border">#E5E7EB</color>
+    <color name="bg_surface">#F1F5F9</color>
+    <!-- Drawer Item Colors -->
+    <color name="drawer_item_selector">#6B46C1</color>   <!-- Purple - your main brand color -->
+    <color name="drawer_item_inactive">#374151</color>
+    <color name="green">#10B981</color>
+    <!-- Bottom Navigation Selector -->
+    <color name="bottom_nav_selector">#6B46C1</color>   <!-- Active color (Purple) -->
+    <color name="bottom_nav_inactive">#9CA3AF</color>   <!-- Inactive color --><!-- Dark gray for inactive items -->
+
+
 
 </resources>
