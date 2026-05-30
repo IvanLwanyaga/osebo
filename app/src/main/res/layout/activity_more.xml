@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F3F4F6"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- TITLE -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#111827"
+        android:paddingBottom="16dp"/>
+
+    <!-- PROFILE CARD -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Profile"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="View and edit your account details"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textColor="#6B7280"/>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- SETTINGS -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Settings"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="App preferences and configuration"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textColor="#6B7280"/>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- LOGOUT -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Logout"
+        android:backgroundTint="#DC2626"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
