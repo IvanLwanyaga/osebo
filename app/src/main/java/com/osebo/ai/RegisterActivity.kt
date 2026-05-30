@@ -127,6 +127,7 @@ class RegisterActivity : AppCompatActivity() {
                             "phoneNumber" to fullPhone,
                             "photoUrl" to null,
                             "role" to "CASHIER",
+                            "shopId" to "shop_001",
                             "isActive" to true,
                             "createdAt" to System.currentTimeMillis(),
                             "lastLoginAt" to null
