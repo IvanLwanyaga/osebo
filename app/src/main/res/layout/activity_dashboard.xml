@@ -123,8 +123,8 @@
 
                             <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/img_avatar"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_marginStart="4dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/user_avatar"
@@ -302,7 +302,8 @@
                                 <include
                                     android:id="@+id/mini_expenses"
                                     layout="@layout/view_mini_stat"
-                                    android:layout_marginTop="12dp" />
+                                    android:layout_marginTop="12dp"
+                                    />
 
                             </LinearLayout>
 
@@ -459,6 +460,60 @@
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_create_shop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/purple_light"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/purple"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="18dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_add"
+                                app:tint="@color/purple"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Create New Shop"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Register and manage a new business branch"
+                                    android:textColor="@color/text_muted"
+                                    android:textSize="13sp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
