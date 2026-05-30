@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ListenerRegistration
 import com.osebo.ai.activities.ShopsActivity
-import com.osebo.ai.adapters.ShopAdapter
 import com.osebo.ai.databinding.ActivityDashboardBinding
 import com.osebo.ai.utils.FirebaseHelper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -23,11 +25,30 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setCurrentDate()
+
         setupRecyclerView()
         loadShops()
+
+        setupDashboardCards()
         setupBottomNavigation()
     }
 
+    // -------------------------
+    // DATE
+    // -------------------------
+    private fun setCurrentDate() {
+        val date = SimpleDateFormat(
+            "EEEE, dd MMM yyyy",
+            Locale.getDefault()
+        ).format(Date())
+
+        binding.txtDate.text = date
+    }
+
+    // -------------------------
+    // RECYCLER
+    // -------------------------
     private fun setupRecyclerView() {
         shopAdapter = ShopAdapter(shopList)
         binding.recyclerShops.layoutManager = LinearLayoutManager(this)
@@ -51,6 +72,28 @@ class DashboardActivity : AppCompatActivity() {
             }
     }
 
+    // -------------------------
+    // DASHBOARD CARDS
+    // -------------------------
+    private fun setupDashboardCards() {
+
+        binding.btnCreateShop.setOnClickListener {
+            startActivity(Intent(this, CreateShopActivity::class.java))
+        }
+
+        binding.btnNewSale.setOnClickListener {
+            startActivity(Intent(this, CreateSaleActivity::class.java))
+        }
+
+        binding.btnViewShops.setOnClickListener {
+            startActivity(Intent(this, ShopsActivity::class.java))
+        }
+
+    }
+
+    // -------------------------
+    // BOTTOM NAVIGATION
+    // -------------------------
     private fun setupBottomNavigation() {
 
         binding.bottomNav.setOnItemSelectedListener { item ->
@@ -62,7 +105,7 @@ class DashboardActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_sales -> {
-                    startActivity(Intent(this, SalesActivity::class.java))
+                    startActivity(Intent(this, CreateSaleActivity::class.java))
                     true
                 }
 
@@ -77,7 +120,7 @@ class DashboardActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_more -> {
-                    startActivity(Intent(this, ShopsActivity::class.java))
+                    startActivity(Intent(this, MoreActivity::class.java))
                     true
                 }
 
