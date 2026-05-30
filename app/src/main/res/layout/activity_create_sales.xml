@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F4F6"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Sale"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#111827"
+            android:paddingBottom="12dp"/>
+
+        <!-- SELECT SHOP -->
+        <TextView
+            android:text="Select Shop"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#111827"/>
+
+        <Spinner
+            android:id="@+id/spinnerShop"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/bg_input_box"/>
+
+        <!-- PRODUCT NAME -->
+        <TextView
+            android:text="Product Name"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/etProduct"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/bg_input_box"
+            android:hint="Enter product name"/>
+
+        <!-- QUANTITY -->
+        <TextView
+            android:text="Quantity"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/etQty"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:inputType="number"
+            android:background="@drawable/bg_input_box"
+            android:hint="Enter quantity"/>
+
+        <!-- PRICE -->
+        <TextView
+            android:text="Unit Price"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/etPrice"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:inputType="numberDecimal"
+            android:background="@drawable/bg_input_box"
+            android:hint="Enter price"/>
+
+        <!-- PAYMENT METHOD -->
+        <TextView
+            android:text="Payment Method"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerPayment"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/bg_input_box"/>
+
+        <!-- TOTAL -->
+        <TextView
+            android:id="@+id/txtTotal"
+            android:text="Total: 0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#6D28D9"
+            android:layout_marginTop="16dp"/>
+
+        <!-- BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveSale"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Save Sale"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#6D28D9"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
