@@ -36,6 +36,10 @@
                 android:id="@+id/nav_billing"
                 android:icon="@drawable/ic_billing"
                 android:title="Billing" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Logout"/>
         </menu>
     </item>
 
