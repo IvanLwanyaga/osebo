@@ -176,7 +176,7 @@
                             android:paddingTop="6dp"
                             android:paddingEnd="12dp"
                             android:paddingBottom="6dp"
-                            android:text="Today"
+                            android:text="loading..."
                             android:textColor="@color/purple"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -289,10 +289,12 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="19dp"
                                 android:gravity="end"
                                 android:orientation="vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/txt_balance"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <include
@@ -302,8 +304,11 @@
                                 <include
                                     android:id="@+id/mini_expenses"
                                     layout="@layout/view_mini_stat"
-                                    android:layout_marginTop="12dp"
-                                    />
+                                    app:statIcon="@drawable/ic_expenses"
+                                    app:statLabel="Expenses"
+                                    app:statValue="UGX 3.2M" />
+
+
 
                             </LinearLayout>
 
@@ -311,6 +316,172 @@
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
+                <!-- PERFORMANCE OVERVIEW (INTERVAL-BASED) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPerformance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:strokeColor="@color/border"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Performance Overview"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:textColor="@color/text_primary"/>
+
+                        <!-- PERIOD SELECTOR (KEY UPGRADE) -->
+                        <LinearLayout
+                            android:id="@+id/periodSelector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/tabDaily"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Daily"
+                                android:padding="16sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/purple"/>
+
+                            <TextView
+                                android:id="@+id/tabWeekly"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Weekly"
+                                android:padding="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="10dp"
+                                android:textColor="@color/text_muted"/>
+
+                            <TextView
+                                android:id="@+id/tabMonthly"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Monthly"
+                                android:padding="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="10dp"
+                                android:textColor="@color/text_muted"/>
+
+                            <TextView
+                                android:id="@+id/tabYearly"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Yearly"
+                                android:padding="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="10dp"
+                                android:textColor="@color/text_muted"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txtProfitLoss"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Profit: UGX 0 | Loss: UGX 0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="12dp"
+                            android:textColor="@color/purple"/>
+
+                        <TextView
+                            android:id="@+id/txtPerformancePeriod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Daily view"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/text_muted"/>
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- SHOP ANALYTICS -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAnalytics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:strokeColor="@color/border"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shop Analytics"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_primary"/>
+
+                        <!-- KPI ROW -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/txtTotalRevenue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Revenue: UGX 0"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_primary"/>
+
+                            <TextView
+                                android:id="@+id/txtTotalProfit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Profit: UGX 0"
+                                android:textSize="14sp"
+                                android:textColor="@color/purple"/>
+
+                            <TextView
+                                android:id="@+id/txtTotalExpenses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Expenses: UGX 0"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_muted"/>
+
+                            <TextView
+                                android:id="@+id/txtTotalTransactions"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sales: 0"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_primary"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- ===== BODY ===== -->
                 <LinearLayout
@@ -327,7 +498,7 @@
                         android:layout_marginBottom="14dp"
                         android:text="Overview"
                         android:textColor="@color/text_primary"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <GridLayout
@@ -352,20 +523,23 @@
                                 android:padding="16dp">
 
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Daily Sales"
+                                    android:textSize="14sp"
                                     android:textStyle="bold"
-                                    android:layout_height="match_parent"
-                                    android:layout_width="match_parent"
-                                    android:textSize="14sp"/>
+                                    android:textColor="@color/text_primary"/>
 
                                 <TextView
                                     android:id="@+id/txtDailySales"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="UGX 0"
-                                    android:layout_height="match_parent"
-                                    android:layout_width="match_parent"
                                     android:textSize="22sp"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold"
+                                    android:textColor="@android:color/black"/>
+
                             </LinearLayout>
 
                         </com.google.android.material.card.MaterialCardView>
@@ -398,6 +572,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_width="match_parent"
                                     android:textSize="22sp"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"/>
                             </LinearLayout>
 
@@ -431,6 +606,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_width="match_parent"
                                     android:textSize="22sp"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"/>
                             </LinearLayout>
 
@@ -464,6 +640,7 @@
                                     android:layout_width="match_parent"
                                     android:text="UGX 0"
                                     android:textSize="22sp"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"/>
                             </LinearLayout>
 
