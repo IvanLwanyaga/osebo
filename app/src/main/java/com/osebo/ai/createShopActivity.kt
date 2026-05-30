@@ -1,8 +1,6 @@
 package com.osebo.ai
 
 import android.os.Bundle
-import android.util.Patterns
-import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +8,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.hbb20.CountryCodePicker
+import com.google.firebase.firestore.FirebaseFirestore
 
 class CreateShopActivity : AppCompatActivity() {
+
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +26,8 @@ class CreateShopActivity : AppCompatActivity() {
         }
 
         // =======================
-        // VIEW BINDING (MATCH XML)
+        // VIEW BINDING
         // =======================
-
         val etShopName = findViewById<EditText>(R.id.etShopName)
         val spinnerCategory = findViewById<Spinner>(R.id.spinnerBusinessType)
         val etPhone = findViewById<EditText>(R.id.etPhone)
@@ -39,9 +39,8 @@ class CreateShopActivity : AppCompatActivity() {
         val btnCreateShop = findViewById<MaterialButton>(R.id.btnCreateShop)
 
         // =======================
-        // CATEGORY SPINNER SETUP
+        // SPINNER SETUP
         // =======================
-
         val categories = arrayOf(
             "Select Category",
             "Fashion",
@@ -62,14 +61,11 @@ class CreateShopActivity : AppCompatActivity() {
         )
 
         spinnerCategory.adapter = adapter
-
-        // default selection
         spinnerCategory.setSelection(0)
 
         // =======================
-        // BUTTON ACTION
+        // CREATE SHOP BUTTON
         // =======================
-
         btnCreateShop.setOnClickListener {
 
             val shopName = etShopName.text.toString().trim()
@@ -94,14 +90,8 @@ class CreateShopActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (phone.isEmpty()) {
-                etPhone.error = "Phone required"
-                etPhone.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (phone.length < 9) {
-                etPhone.error = "Invalid phone number"
+            if (phone.isEmpty() || phone.length < 9) {
+                etPhone.error = "Valid phone required"
                 etPhone.requestFocus()
                 return@setOnClickListener
             }
@@ -113,36 +103,54 @@ class CreateShopActivity : AppCompatActivity() {
             }
 
             if (!cbTerms.isChecked) {
-                Toast.makeText(
-                    this,
-                    "Accept terms to continue",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Accept terms to continue", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // =======================
-            // SUCCESS STATE
+            // LOADING STATE
             // =======================
-
             btnCreateShop.isEnabled = false
             btnCreateShop.text = "Creating..."
 
-            // simulate network call
-            btnCreateShop.postDelayed({
-                btnCreateShop.isEnabled = true
-                btnCreateShop.text = "Create Shop"
+            // =======================
+            // FIREBASE DATA
+            // =======================
+            val shopData = hashMapOf(
+                "name" to shopName,
+                "category" to category,
+                "phone" to fullPhone,
+                "location" to location,
+                "description" to description,
+                "timestamp" to System.currentTimeMillis()
+            )
 
-                Toast.makeText(
-                    this,
-                    "Shop created successfully!",
-                    Toast.LENGTH_LONG
-                ).show()
+            db.collection("shops")
+                .add(shopData)
+                .addOnSuccessListener {
 
-                // TODO:
-                // Send data to Firebase / API here
+                    btnCreateShop.isEnabled = true
+                    btnCreateShop.text = "Create Shop"
 
-            }, 1500)
+                    Toast.makeText(
+                        this,
+                        "Shop created successfully!",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    finish() // go back to dashboard
+                }
+                .addOnFailureListener { e ->
+
+                    btnCreateShop.isEnabled = true
+                    btnCreateShop.text = "Create Shop"
+
+                    Toast.makeText(
+                        this,
+                        "Failed: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
         }
     }
 }
