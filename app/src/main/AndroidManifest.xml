@@ -34,6 +34,7 @@
         <activity android:name=".MoreActivity" />
         <activity android:name=".HRActivity" />
         <activity android:name=".FinanceActivity" />
+        <activity android:name=".AddProductActivity" />
     </application>
 
 </manifest>
