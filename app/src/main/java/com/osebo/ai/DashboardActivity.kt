@@ -9,8 +9,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
-import com.osebo.ai.activities.ShopsActivity
 import com.osebo.ai.databinding.ActivityDashboardBinding
+import com.osebo.ai.models.Product
 import com.osebo.ai.models.Sale
 import com.osebo.ai.models.Shop
 import java.text.SimpleDateFormat
@@ -28,6 +28,7 @@ class DashboardActivity : AppCompatActivity() {
     
     private var shopsListener: ListenerRegistration? = null
     private var salesListener: ListenerRegistration? = null
+    private var inventoryListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,25 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         setupUI()
+        fetchUserData()
         startRealtimeListeners()
+    }
+
+    private fun fetchUserData() {
+        val uid = auth.currentUser?.uid ?: return
+        db.collection("users").document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists()) {
+                    val name = doc.getString("displayName") ?: "Osebo User"
+                    binding.txtUsername.text = name
+                    
+                    // Also update drawer header if possible
+                    val headerView = binding.navView.getHeaderView(0)
+                    val txtHeaderName = headerView.findViewById<android.widget.TextView>(R.id.txt_header_name)
+                    txtHeaderName?.text = name
+                }
+            }
     }
 
     private fun setupUI() {
@@ -81,12 +100,31 @@ class DashboardActivity : AppCompatActivity() {
                 shopAdapter.notifyDataSetChanged()
                 binding.txtTotalShops.text = shopList.size.toString()
                 
-                // Once we have the user's shops, listen for their SALES
+                // Once we have the user's shops, listen for their SALES and INVENTORY
                 if (userShopIds.isNotEmpty()) {
                     listenForSales(userShopIds)
+                    listenForInventory(userShopIds)
                 } else {
                     resetStats()
                 }
+            }
+    }
+
+    private fun listenForInventory(shopIds: List<String>) {
+        inventoryListener?.remove()
+        inventoryListener = db.collection("inventory")
+            .whereIn("shopId", shopIds)
+            .addSnapshotListener { value, error ->
+                if (error != null) return@addSnapshotListener
+                
+                var totalProducts = 0
+                value?.documents?.forEach { doc ->
+                    val product = doc.toObject(Product::class.java)
+                    if (product != null) {
+                        totalProducts += product.quantity
+                    }
+                }
+                binding.txtInventoryStats.text = "Inventory: $totalProducts items"
             }
     }
 
@@ -201,6 +239,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onDestroy()
         shopsListener?.remove()
         salesListener?.remove()
+        inventoryListener?.remove()
     }
 
     override fun onBackPressed() {
