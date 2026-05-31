@@ -14,8 +14,25 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="24dp"
         tools:context=".RegisterActivity">
+
+        <!-- LEFT GUIDE -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <!-- RIGHT GUIDE -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
 
         <!-- LOGO -->
         <ImageView
@@ -25,8 +42,8 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/osebo"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- TITLE -->
@@ -40,8 +57,8 @@
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvSubtitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
         <!-- SUBTITLE -->
@@ -52,8 +69,8 @@
             android:text="Create your account"
             android:textColor="#6B7280"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/textView2" />
 
         <!-- TITLE LABEL -->
@@ -66,7 +83,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
         <!-- TITLE SPINNER -->
@@ -79,8 +96,8 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvTitleLabel" />
 
         <!-- FIRST NAME LABEL -->
@@ -93,7 +110,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/spinnerTitle" />
 
         <!-- FIRST NAME -->
@@ -108,8 +125,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvFirstName" />
 
         <!-- LAST NAME LABEL -->
@@ -122,7 +139,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/editTextText" />
 
         <!-- LAST NAME -->
@@ -137,8 +154,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvLastName" />
 
         <!-- EMAIL LABEL -->
@@ -151,7 +168,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/editTextText2" />
 
         <!-- EMAIL -->
@@ -166,8 +183,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvEmail" />
 
         <!-- PHONE LABEL -->
@@ -180,7 +197,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
         <!-- PHONE LAYOUT -->
@@ -194,8 +211,8 @@
             android:orientation="horizontal"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvPhone">
 
             <com.hbb20.CountryCodePicker
@@ -237,7 +254,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/phoneLayout" />
 
         <!-- PASSWORD -->
@@ -252,8 +269,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvPassword" />
 
         <!-- CONFIRM PASSWORD LABEL -->
@@ -266,7 +283,7 @@
             android:textColor="#111827"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/editTextTextPassword" />
 
         <!-- CONFIRM PASSWORD -->
@@ -283,8 +300,8 @@
             android:paddingEnd="16dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/cbTerms"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword" />
 
         <!-- TERMS -->
@@ -296,10 +313,10 @@
             android:text="I agree to the Terms and Conditions and Privacy Policy"
             android:textColor="#4B5563"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingStart="8dp"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/editTextTextPassword2" />
-
         <!-- SEND OTP BUTTON -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
@@ -313,8 +330,8 @@
             android:textStyle="bold"
             app:backgroundTint="#6D28D9"
             app:cornerRadius="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/cbTerms" />
 
         <!-- LOGIN ROW -->
@@ -327,8 +344,8 @@
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/leftGuide"
+            app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/button">
 
             <TextView
