@@ -1,156 +1,96 @@
 package com.osebo.ai
 
 import android.os.Bundle
-import android.widget.*
-import androidx.activity.enableEdgeToEdge
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.button.MaterialButton
-import com.hbb20.CountryCodePicker
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.osebo.ai.databinding.ActivityCreateShopBinding
+import com.osebo.ai.models.Shop
+import java.util.UUID
 
 class CreateShopActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityCreateShopBinding
     private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_create_shop)
+        binding = ActivityCreateShopBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        setupSpinner()
+
+        binding.btnCreateShop.setOnClickListener {
+            createShop()
         }
 
-        // =======================
-        // VIEW BINDING
-        // =======================
-        val etShopName = findViewById<EditText>(R.id.etShopName)
-        val spinnerCategory = findViewById<Spinner>(R.id.spinnerBusinessType)
-        val etPhone = findViewById<EditText>(R.id.etPhone)
-        val etLocation = findViewById<EditText>(R.id.etLocation)
-        val etDescription = findViewById<EditText>(R.id.etDescription)
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+    }
 
-        val ccp = findViewById<CountryCodePicker>(R.id.ccp)
-        val cbTerms = findViewById<CheckBox>(R.id.cbTerms)
-        val btnCreateShop = findViewById<MaterialButton>(R.id.btnCreateShop)
-
-        // =======================
-        // SPINNER SETUP
-        // =======================
+    private fun setupSpinner() {
         val categories = arrayOf(
-            "Select Category",
-            "Fashion",
-            "Electronics",
-            "Groceries",
-            "Beauty",
-            "Restaurant",
-            "Furniture",
-            "Pharmacy",
-            "Books",
-            "Other"
+            "Select Category", "Fashion", "Electronics", "Groceries", 
+            "Beauty", "Restaurant", "Furniture", "Pharmacy", "Books", "Other"
         )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories)
+        binding.spinnerBusinessType.adapter = adapter
+    }
 
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_dropdown_item,
-            categories
-        )
+    private fun createShop() {
+        val userId = auth.currentUser?.uid ?: return
+        val shopName = binding.etShopName.text.toString().trim()
+        val category = binding.spinnerBusinessType.selectedItem.toString()
+        val phone = binding.etPhone.text.toString().trim()
+        val location = binding.etLocation.text.toString().trim()
+        val description = binding.etDescription.text.toString().trim()
 
-        spinnerCategory.adapter = adapter
-        spinnerCategory.setSelection(0)
-
-        // =======================
-        // CREATE SHOP BUTTON
-        // =======================
-        btnCreateShop.setOnClickListener {
-
-            val shopName = etShopName.text.toString().trim()
-            val category = spinnerCategory.selectedItem.toString()
-            val phone = etPhone.text.toString().trim()
-            val location = etLocation.text.toString().trim()
-            val description = etDescription.text.toString().trim()
-            val fullPhone = ccp.selectedCountryCodeWithPlus + phone
-
-            // =======================
-            // VALIDATION
-            // =======================
-
-            if (shopName.isEmpty()) {
-                etShopName.error = "Shop name required"
-                etShopName.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (category == "Select Category") {
-                Toast.makeText(this, "Select a category", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (phone.isEmpty() || phone.length < 9) {
-                etPhone.error = "Valid phone required"
-                etPhone.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (location.isEmpty()) {
-                etLocation.error = "Location required"
-                etLocation.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (!cbTerms.isChecked) {
-                Toast.makeText(this, "Accept terms to continue", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // =======================
-            // LOADING STATE
-            // =======================
-            btnCreateShop.isEnabled = false
-            btnCreateShop.text = "Creating..."
-
-            // =======================
-            // FIREBASE DATA
-            // =======================
-            val shopData = hashMapOf(
-                "name" to shopName,
-                "category" to category,
-                "phone" to fullPhone,
-                "location" to location,
-                "description" to description,
-                "timestamp" to System.currentTimeMillis()
-            )
-
-            db.collection("shops")
-                .add(shopData)
-                .addOnSuccessListener {
-
-                    btnCreateShop.isEnabled = true
-                    btnCreateShop.text = "Create Shop"
-
-                    Toast.makeText(
-                        this,
-                        "Shop created successfully!",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    finish() // go back to dashboard
-                }
-                .addOnFailureListener { e ->
-
-                    btnCreateShop.isEnabled = true
-                    btnCreateShop.text = "Create Shop"
-
-                    Toast.makeText(
-                        this,
-                        "Failed: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+        if (shopName.isEmpty()) {
+            binding.etShopName.error = "Required"
+            return
         }
+        if (category == "Select Category") {
+            Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (location.isEmpty()) {
+            binding.etLocation.error = "Required"
+            return
+        }
+        if (!binding.cbTerms.isChecked) {
+            Toast.makeText(this, "Please accept terms", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        binding.btnCreateShop.isEnabled = false
+        binding.btnCreateShop.text = "Creating..."
+
+        val shopId = UUID.randomUUID().toString()
+        val shop = Shop(
+            id = shopId,
+            name = shopName,
+            category = category,
+            address = location,
+            phoneNumber = binding.ccp.selectedCountryCodeWithPlus + phone,
+            description = description,
+            ownerId = userId,
+            createdAt = System.currentTimeMillis()
+        )
+
+        db.collection("shops").document(shopId)
+            .set(shop)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Shop created successfully!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                binding.btnCreateShop.isEnabled = true
+                binding.btnCreateShop.text = "Create Shop"
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }
