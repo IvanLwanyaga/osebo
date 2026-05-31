@@ -476,6 +476,14 @@
                                 android:text="Sales: 0"
                                 android:textSize="14sp"
                                 android:textColor="@color/text_primary"/>
+
+                            <TextView
+                                android:id="@+id/txtInventoryStats"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Inventory: 0 items"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_primary"/>
                         </LinearLayout>
 
                     </LinearLayout>
