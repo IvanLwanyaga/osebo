@@ -96,6 +96,7 @@ class CreateSaleActivity : AppCompatActivity() {
     }
 
     private fun saveSale() {
+        val userId = auth.currentUser?.uid ?: return
         val productName = binding.etProduct.text.toString().trim()
         val qtyString = binding.etQty.text.toString().trim()
         val priceString = binding.etPrice.text.toString().trim()
@@ -122,7 +123,8 @@ class CreateSaleActivity : AppCompatActivity() {
         val sale = Sale(
             id = saleId,
             shopId = selectedShop.id,
-            cashierId = auth.currentUser?.uid ?: "",
+            cashierId = userId,
+            ownerId = userId,
             totalAmount = total,
             paymentMethod = paymentMethod,
             createdAt = System.currentTimeMillis()
