@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F4F6"
+    android:background="@color/bg_page"
     android:fillViewport="true"
     tools:context=".CreateShopActivity">
 
@@ -14,30 +13,40 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="22dp">
+        android:padding="24dp">
 
-        <!-- LOGO -->
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="78dp"
-            android:layout_height="78dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/osebo"
+        <!-- Header Icon -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/iconCard"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/primaryLight"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/store"
+                app:tint="@color/primary" />
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- TITLE -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Shop"
-            android:textSize="30sp"
+            android:text="Create New Shop"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#111827"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/imgLogo"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/iconCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -45,209 +54,213 @@
             android:id="@+id/tvSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start selling products online"
-            android:textColor="#6B7280"
+            android:text="Set up your business branch in seconds"
+            android:textColor="@color/text_muted"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- SHOP NAME -->
-        <TextView
-            android:id="@+id/tvShopName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shop Name *"
-            android:textStyle="bold"
-            android:textColor="#111827"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <EditText
-            android:id="@+id/etShopName"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_input_box"
-            android:hint="Enter shop name"
-            android:padding="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/tvBusinessType"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvShopName" />
-
-        <!-- SHOP TYPE -->
-        <TextView
-            android:id="@+id/tvBusinessType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shop Type *"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/etShopName"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <Spinner
-            android:id="@+id/spinnerBusinessType"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_input_box"
-            app:layout_constraintBottom_toTopOf="@+id/tvTin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvBusinessType" />
-
-        <!-- TIN -->
-        <TextView
-            android:id="@+id/tvTin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TIN Number (Optional)"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/spinnerBusinessType"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <EditText
-            android:id="@+id/etTin"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/bg_input_box"
-            android:hint="Enter TIN number"
-            app:layout_constraintBottom_toTopOf="@+id/tvPhone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTin" />
-
-        <!-- PHONE -->
-        <TextView
-            android:id="@+id/tvPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Business Phone (Optional)"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/etTin"
-            app:layout_constraintStart_toStartOf="parent"/>
-
+        <!-- Form Container -->
         <LinearLayout
-            android:id="@+id/phoneLayout"
-            android:layout_width="0dp"
-            android:layout_height="58dp"
-            android:background="@drawable/bg_input_box"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/tvPhone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:id="@+id/formContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/ccp"
+            <!-- SHOP NAME -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:ccp_defaultNameCode="UG"
-                app:ccp_autoDetectCountry="true"/>
+                android:text="Shop Name"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
 
             <EditText
-                android:id="@+id/etPhone"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="Phone number"
-                android:background="@android:color/transparent"/>
-        </LinearLayout>
+                android:id="@+id/etShopName"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@drawable/bg_input_focus"
+                android:hint="e.g. Osebo Electronics"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/border"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
 
-        <!-- LOCATION -->
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shop Location *"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/phoneLayout"
-            app:layout_constraintStart_toStartOf="parent"/>
+            <!-- SHOP TYPE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business Type"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/etLocation"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/bg_input_box"
-            android:hint="Enter location"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+            <Spinner
+                android:id="@+id/spinnerBusinessType"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@drawable/bg_input_box"
+                android:layout_marginBottom="16dp" />
 
-        <!-- DESCRIPTION -->
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/etLocation"
-            app:layout_constraintStart_toStartOf="parent"/>
+            <!-- TIN -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TIN Number (Optional)"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/etDescription"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="17dp"
-            android:background="@drawable/bg_input_box"
-            android:hint="Describe your shop"
-            app:layout_constraintBottom_toTopOf="@+id/cbTerms"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            <EditText
+                android:id="@+id/etTin"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@drawable/bg_input_focus"
+                android:hint="Enter 10-digit TIN"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/border"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
 
-        <!-- TERMS -->
-        <CheckBox
-            android:id="@+id/cbTerms"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="I confirm information is correct"
-            app:layout_constraintBottom_toTopOf="@+id/buttonRow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etDescription" />
+            <!-- PHONE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business Phone"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
 
-        <!-- BUTTONS -->
-        <LinearLayout
-            android:id="@+id/buttonRow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="22dp"
-            app:layout_constraintTop_toBottomOf="@id/cbTerms"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@drawable/bg_input_focus"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCreateShop"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="55dp"
-                android:text="Create Shop"
-                android:foreground="?attr/selectableItemBackground"
-                android:backgroundTint="#6D28D9"
-                android:textColor="#FFFFFF"/>
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultNameCode="UG"
+                    app:ccp_autoDetectCountry="true"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCancel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="55dp"
-                android:layout_marginStart="10dp"
-                android:text="Cancel"
-                android:foreground="?attr/selectableItemBackground"
-                android:backgroundTint="#E5E7EB"
-                android:textColor="#111827"/>
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Phone number"
+                    android:paddingStart="8dp"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"/>
+            </LinearLayout>
+
+            <!-- LOCATION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etLocation"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@drawable/bg_input_focus"
+                android:hint="e.g. Kampala, Uganda"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/border"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- DESCRIPTION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/bg_input_focus"
+                android:hint="Tell us about your shop..."
+                android:padding="18dp"
+                android:gravity="top"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/border"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- TERMS -->
+            <CheckBox
+                android:id="@+id/cbTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I confirm this information is correct"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="24dp" />
+
+            <!-- BUTTONS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="40dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancel"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="58dp"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="12dp"
+                    app:cornerRadius="16dp"
+                    android:textColor="@color/text_primary"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateShop"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="58dp"
+                    android:text="Create Shop"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="16dp"
+                    android:backgroundTint="@color/primary"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
