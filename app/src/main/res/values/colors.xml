@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="b">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="blue">#0074ba</color>
-    <color name="black">#131212</color>
-    <color name="purple">#9d0dff</color>
-    <color name="primary">#6D28D9</color>
-    <color name="primaryDark">#4C1D95</color>
-    <color name="background">#F9FAFB</color>
-    <color name="textDark">#111827</color>
-    <color name="textLight">#6B7280</color>
-    <color name="gray">#898989</color>
-    <color name="whyt">#FFFFFF</color>
-    <color name="purple_primary">#6B21B6</color>
-    <color name="purple_light">#F3E8FF</color>
-    <color name="secondary">#64748B</color>
+    <!-- Brand Colors (Sunset & Cream Professional) -->
+    <color name="primary">#EA580C</color>          <!-- Vivid Orange -->
+    <color name="primaryDark">#9A3412</color>      <!-- Deep Terracotta -->
+    <color name="primaryLight">#FFEDD5</color>     <!-- Very Light Peach -->
+
+    <color name="secondary">#F97316</color>        <!-- Amber -->
+    <color name="accent">#0EA5E9</color>           <!-- Professional Blue Accent -->
+
+    <!-- Neutral Colors -->
+    <color name="background">#FFF7ED</color>       <!-- Warm Cream -->
+    <color name="surface">#FFFFFF</color>          <!-- White -->
+    <color name="bg_page">#FFFBF7</color>          <!-- Softer Warm Background -->
+    <color name="bg_surface">#FFEDD5</color>       <!-- Peach Surface -->
+
+    <color name="textDark">#431407</color>         <!-- Deep Coffee -->
+    <color name="text_primary">#431407</color>     <!-- Alias for deep coffee -->
+    <color name="textLight">#9A3412</color>        <!-- Terracotta for subtext -->
+    <color name="text_muted">#9A3412</color>       <!-- Alias for terracotta -->
+    <color name="text_secondary">#7C2D12</color>   <!-- Mid-tone brown -->
+
+    <color name="border">#FED7AA</color>           <!-- Light Orange Border -->
+    <color name="ripple_color">#20EA580C</color>   <!-- Primary color ripple -->
+
+    <!-- Status Colors -->
     <color name="success">#10B981</color>
     <color name="danger">#EF4444</color>
-    <color name="bottom_nav_selected">#6B21B6</color>
-    <color name="bottom_nav_unselected">#94A3B8</color>
-    <!-- Primary Brand Colors -->
-    <color name="colorPrimary">#6B21B6</color>
-    <color name="colorPrimaryDark">#4C1D95</color>
-    <color name="colorAccent">#A855F7</color>
+    <color name="warning">#F59E0B</color>
+    <color name="info">#3B82F6</color>
 
-    <!-- Backgrounds -->
-    <color name="backgrnd">#F8FAFC</color>
-    <color name="surface">#FFFFFF</color>
+    <!-- Navigation & UI Specific -->
+    <color name="bottom_nav_selected">#EA580C</color>
+    <color name="bottom_nav_unselected">#9A3412</color>
+    <color name="drawer_item_selector">#EA580C</color>
+    <color name="drawer_item_inactive">#431407</color>
 
-    <!-- Text Colors -->
-    <color name="text_primary">#1E2937</color>
-    <color name="text_secondary">#64748B</color>
-    <color name="ripple_color">#1A000000</color>
-    <color name="bg_page">#F8F9FA</color>
-    <color name="text_muted">#6B7280</color>
-    <color name="border">#E5E7EB</color>
-    <color name="bg_surface">#F1F5F9</color>
-    <!-- Drawer Item Colors -->
-    <color name="drawer_item_selector">#6B46C1</color>   <!-- Purple - your main brand color -->
-    <color name="drawer_item_inactive">#374151</color>
+    <!-- Compatibility/Legacy (Mapping to new theme) -->
+    <color name="purple">#EA580C</color>           <!-- Redirecting purple to primary -->
+    <color name="purple_primary">#EA580C</color>
+    <color name="purple_light">#FFEDD5</color>
     <color name="green">#10B981</color>
-    <!-- Bottom Navigation Selector -->
-    <color name="bottom_nav_selector">#6B46C1</color>   <!-- Active color (Purple) -->
-    <color name="bottom_nav_inactive">#9CA3AF</color>   <!-- Inactive color --><!-- Dark gray for inactive items -->
-
-
+    <color name="blue">#3B82F6</color>
+    <color name="black">#131212</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#9A3412</color>
 
 </resources>
