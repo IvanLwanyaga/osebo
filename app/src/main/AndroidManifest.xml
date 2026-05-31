@@ -27,6 +27,13 @@
         <activity android:name=".ReportsActivity" />
         <activity android:name=".InventoryActivity" />
         <activity android:name=".SalesActivity" />
+        <activity android:name=".CreateShopActivity" />
+        <activity android:name=".CreateSaleActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ContactUsActivity" />
+        <activity android:name=".MoreActivity" />
+        <activity android:name=".HRActivity" />
+        <activity android:name=".FinanceActivity" />
     </application>
 
 </manifest>
