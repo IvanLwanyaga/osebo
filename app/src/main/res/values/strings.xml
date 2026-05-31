@@ -5,6 +5,8 @@
     <string name="app_name">Osebo AI</string>
 
     <!-- GENERAL -->
+    <string name="app_tagline">Intelligent Business Management</string>
+    <string name="app_version">v1.0.0</string>
     <string name="welcome">Welcome</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
