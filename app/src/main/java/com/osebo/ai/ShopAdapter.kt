@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.osebo.ai.databinding.ItemShopBinding
+import com.osebo.ai.models.Shop
 
 class ShopAdapter(private val shops: List<Shop>) :
     RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
@@ -24,7 +25,7 @@ class ShopAdapter(private val shops: List<Shop>) :
         val shop = shops[position]
 
         holder.binding.txtShopName.text = shop.name
-        holder.binding.txtLocation.text = shop.location
+        holder.binding.txtLocation.text = shop.address
     }
 
     override fun getItemCount() = shops.size
