@@ -2,7 +2,10 @@ package com.osebo.ai
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,9 +34,7 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // -------------------------
-        // SECURITY CHECK
-        // -------------------------
+        // Security Check
         if (auth.currentUser == null) {
             goToLogin()
             return
@@ -42,114 +43,48 @@ class DashboardActivity : AppCompatActivity() {
         setCurrentDate()
         setupRecyclerView()
         loadShops()
-        setupDashboardCards()
+        setupDashboardActions()
         setupBottomNavigation()
-        setupLogout()
-    }
-
-    // -------------------------
-    // LOGOUT (SAFE IMPLEMENTATION)
-    // -------------------------
-    private fun setupLogout() {
-
-        // OPTION 1: If you add btn_logout in XML
-//        try {
-//            binding.btnLogout.setOnClickListener {
-//                logout()
-//            }
-//        } catch (e: Exception) {
-//            // Ignore if button does not exist in XML
-//        }
-
-        // OPTION 2: Drawer logout (recommended)
-        binding.navView.setNavigationItemSelectedListener { item ->
-
-            when (item.itemId) {
-
-                R.id.nav_logout -> {
-                    logout()
-                    true
-                }
-
-                else -> false
-            }
+        setupNavigationDrawer()
+        
+        // Open drawer on menu click
+        binding.btnMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
     }
 
-    private fun logout() {
-
-        auth.signOut()
-
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-        startActivity(intent)
-        finish()
-    }
-
-    private fun goToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
-    }
-
-    // -------------------------
-    // DATE
-    // -------------------------
-    private fun setCurrentDate() {
-
-        val date = SimpleDateFormat(
-            "EEEE, dd MMM yyyy",
-            Locale.getDefault()
-        ).format(Date())
-
-        binding.txtDate.text = date
-    }
-
-    // -------------------------
-    // RECYCLER
-    // -------------------------
-    private fun setupRecyclerView() {
-
-        shopAdapter = ShopAdapter(shopList)
-
-        binding.recyclerShops.layoutManager =
-            LinearLayoutManager(this)
-
-        binding.recyclerShops.adapter =
-            shopAdapter
-    }
-
-    private fun loadShops() {
-
-        listener = db.collection("shops")
-            .addSnapshotListener { value, error ->
-
-                if (error != null) return@addSnapshotListener
-
-                shopList.clear()
-
-                value?.documents?.forEach { doc ->
-
-                    val shop = doc.toObject(Shop::class.java)
-
-                    if (shop != null) {
-                        shopList.add(shop)
-                    }
+    private fun setupNavigationDrawer() {
+        binding.navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_dashboard -> {
+                    // Already here
                 }
-
-                shopAdapter.notifyDataSetChanged()
-
-                binding.txtTotalShops.text =
-                    shopList.size.toString()
+                R.id.nav_all_shops -> {
+                    startActivity(Intent(this, ShopsActivity::class.java))
+                }
+                R.id.nav_account -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                }
+                R.id.nav_contact -> {
+                    startActivity(Intent(this, ContactUsActivity::class.java))
+                }
+                R.id.nav_admin -> {
+                    // Map to HR or custom Admin page if exists
+                    startActivity(Intent(this, HRActivity::class.java))
+                }
+                R.id.nav_billing -> {
+                    startActivity(Intent(this, FinanceActivity::class.java))
+                }
+                R.id.nav_logout -> {
+                    logout()
+                }
             }
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
-    // -------------------------
-    // DASHBOARD CARDS
-    // -------------------------
-    private fun setupDashboardCards() {
-
+    private fun setupDashboardActions() {
         binding.btnCreateShop.setOnClickListener {
             startActivity(Intent(this, CreateShopActivity::class.java))
         }
@@ -161,49 +96,93 @@ class DashboardActivity : AppCompatActivity() {
         binding.btnViewShops.setOnClickListener {
             startActivity(Intent(this, ShopsActivity::class.java))
         }
+
+        binding.btnSeeAll.setOnClickListener {
+            startActivity(Intent(this, ShopsActivity::class.java))
+        }
+        
+        binding.fabAdd.setOnClickListener {
+            startActivity(Intent(this, CreateSaleActivity::class.java))
+        }
+        
+        binding.imgAvatar.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
 
-    // -------------------------
-    // BOTTOM NAVIGATION
-    // -------------------------
     private fun setupBottomNavigation() {
-
         binding.bottomNav.setOnItemSelectedListener { item ->
-
             when (item.itemId) {
-
                 R.id.nav_home -> true
-
                 R.id.nav_sales -> {
-                    startActivity(Intent(this, CreateSaleActivity::class.java))
+                    startActivity(Intent(this, SalesActivity::class.java))
                     true
                 }
-
                 R.id.nav_inventory -> {
                     startActivity(Intent(this, InventoryActivity::class.java))
                     true
                 }
-
                 R.id.nav_reports -> {
                     startActivity(Intent(this, ReportsActivity::class.java))
                     true
                 }
-
                 R.id.nav_more -> {
                     startActivity(Intent(this, MoreActivity::class.java))
                     true
                 }
-
                 else -> false
             }
         }
     }
 
-    // -------------------------
-    // CLEANUP
-    // -------------------------
+    private fun logout() {
+        auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    private fun goToLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
+
+    private fun setCurrentDate() {
+        val date = SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault()).format(Date())
+        binding.txtDate.text = date
+    }
+
+    private fun setupRecyclerView() {
+        shopAdapter = ShopAdapter(shopList)
+        binding.recyclerShops.layoutManager = LinearLayoutManager(this)
+        binding.recyclerShops.adapter = shopAdapter
+    }
+
+    private fun loadShops() {
+        listener = db.collection("shops")
+            .addSnapshotListener { value, error ->
+                if (error != null) return@addSnapshotListener
+                shopList.clear()
+                value?.documents?.forEach { doc ->
+                    val shop = doc.toObject(Shop::class.java)
+                    if (shop != null) shopList.add(shop)
+                }
+                shopAdapter.notifyDataSetChanged()
+                binding.txtTotalShops.text = shopList.size.toString()
+            }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         listener?.remove()
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }
