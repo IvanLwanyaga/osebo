@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+    <path
+        android:fillColor="#E5E7EB"
+        android:pathData="M20,20h80v80H20V20z"/>
+    <path
+        android:fillColor="#9CA3AF"
+        android:pathData="M30,30h60v60H30V30z"/>
+    <path
+        android:fillColor="#6B7280"
+        android:pathData="M45,50 L55,65 L65,55 L75,70 L45,70z"/>
+    <!-- Circle at 50,45 with radius 5 -->
+    <path
+        android:fillColor="#6B7280"
+        android:pathData="M50,40a5,5 0 1,1 0,10a5,5 0 1,1 0,-10z"/>
+</vector>

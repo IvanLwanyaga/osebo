@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
+import com.osebo.ai.adapters.InventoryAdapter
 import com.osebo.ai.databinding.ActivityInventoryBinding
 import com.osebo.ai.models.Product
 
@@ -19,8 +21,8 @@ class InventoryActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     
     private val productList = mutableListOf<Product>()
-    private lateinit var productAdapter: ProductAdapter
-    private var listener: ListenerRegistration? = null
+    private val filteredList = mutableListOf<Product>()
+    private lateinit var adapter: InventoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,58 +30,77 @@ class InventoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupUI()
-        startRealtimeListener()
+        startInventoryListener()
     }
 
     private fun setupUI() {
-        productAdapter = ProductAdapter(productList)
-        binding.recyclerInventory.layoutManager = LinearLayoutManager(this)
-        binding.recyclerInventory.adapter = productAdapter
+        adapter = InventoryAdapter(filteredList) { product ->
+            val intent = Intent(this, AddProductActivity::class.java)
+            intent.putExtra("PRODUCT_ID", product.id)
+            startActivity(intent)
+        }
 
-        binding.fabAddProduct.setOnClickListener {
+        binding.recyclerInventory.apply {
+            layoutManager = LinearLayoutManager(this@InventoryActivity)
+            this.adapter = this@InventoryActivity.adapter
+        }
+
+        binding.btnAddProduct.setOnClickListener {
             startActivity(Intent(this, AddProductActivity::class.java))
         }
 
-        binding.etSearchInventory.addTextChangedListener(object : TextWatcher {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Filter logic
+                filterInventory(s.toString())
             }
             override fun afterTextChanged(s: Editable?) {}
         })
     }
 
-    private fun startRealtimeListener() {
+    private fun startInventoryListener() {
         val userId = auth.currentUser?.uid ?: return
-
-        listener = db.collection("inventory")
+        
+        db.collection("inventory")
             .whereEqualTo("ownerId", userId)
             .addSnapshotListener { value, error ->
-                if (error != null) return@addSnapshotListener
-                
+                if (error != null) {
+                    Toast.makeText(this, "Error listening for inventory", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
+
                 productList.clear()
-                var totalItems = 0
-                var lowStock = 0
-                
+                var totalValue = 0.0
+                var lowStockCount = 0
+
                 value?.documents?.forEach { doc ->
-                    val product = doc.toObject(Product::class.java)
-                    if (product != null) {
+                    doc.toObject(Product::class.java)?.let { p ->
+                        val product = p.copy(id = doc.id)
                         productList.add(product)
-                        totalItems += product.quantity
-                        if (product.quantity <= product.minStock) {
-                            lowStock++
-                        }
+                        
+                        totalValue += (product.price * product.stock)
+                        if (product.stock <= product.lowStockAlert) lowStockCount++
                     }
                 }
-                
-                productAdapter.notifyDataSetChanged()
-                binding.tvTotalItems.text = totalItems.toString()
-                binding.tvLowStock.text = lowStock.toString()
+
+                binding.tvTotalItems.text = productList.size.toString()
+                binding.tvLowStock.text = lowStockCount.toString()
+                binding.tvStockValue.text = "UGX ${String.format("%,.0f", totalValue)}"
+
+                filterInventory(binding.etSearch.text.toString())
             }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        listener?.remove()
+    private fun filterInventory(query: String) {
+        filteredList.clear()
+        if (query.isEmpty()) {
+            filteredList.addAll(productList)
+        } else {
+            val q = query.lowercase()
+            filteredList.addAll(productList.filter { 
+                it.name.lowercase().contains(q) || it.category.lowercase().contains(q) 
+            })
+        }
+        adapter.notifyDataSetChanged()
     }
 }

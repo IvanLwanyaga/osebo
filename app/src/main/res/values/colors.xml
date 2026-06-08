@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Colors (Sunset & Cream Professional) -->
-    <color name="primary">#EA580C</color>          <!-- Vivid Orange -->
-    <color name="primaryDark">#9A3412</color>      <!-- Deep Terracotta -->
-    <color name="primaryLight">#FFEDD5</color>     <!-- Very Light Peach -->
+    <!-- Brand Colors (Osebo Professional Blue) -->
+    <color name="primary">#0F6CBD</color>          <!-- Osebo Logo Blue -->
+    <color name="primaryDark">#0C5A9E</color>      <!-- Deeper Blue -->
+    <color name="primaryLight">#E0F2FE</color>     <!-- Very Light Blue -->
 
-    <color name="secondary">#F97316</color>        <!-- Amber -->
-    <color name="accent">#0EA5E9</color>           <!-- Professional Blue Accent -->
+    <color name="secondary">#0EA5E9</color>        <!-- Sky Blue -->
+    <color name="accent">#F97316</color>           <!-- Professional Orange Accent -->
 
     <!-- Neutral Colors -->
-    <color name="background">#FFF7ED</color>       <!-- Warm Cream -->
+    <color name="background">#F8FAFC</color>       <!-- Very Light Gray/Blue -->
     <color name="surface">#FFFFFF</color>          <!-- White -->
-    <color name="bg_page">#FFFBF7</color>          <!-- Softer Warm Background -->
-    <color name="bg_surface">#FFEDD5</color>       <!-- Peach Surface -->
+    <color name="bg_page">#F1F5F9</color>          <!-- Soft Blue-Gray Background -->
+    <color name="bg_surface">#F8FAFC</color>       <!-- Light Surface -->
 
-    <color name="textDark">#431407</color>         <!-- Deep Coffee -->
-    <color name="text_primary">#431407</color>     <!-- Alias for deep coffee -->
-    <color name="textLight">#9A3412</color>        <!-- Terracotta for subtext -->
-    <color name="text_muted">#9A3412</color>       <!-- Alias for terracotta -->
-    <color name="text_secondary">#7C2D12</color>   <!-- Mid-tone brown -->
+    <color name="textDark">#0F172A</color>         <!-- Slate 900 -->
+    <color name="text_primary">#0F172A</color>     <!-- Alias for dark text -->
+    <color name="textLight">#64748B</color>        <!-- Slate 500 for subtext -->
+    <color name="text_muted">#64748B</color>       <!-- Alias for muted text -->
+    <color name="text_secondary">#334155</color>   <!-- Slate 700 -->
 
-    <color name="border">#FED7AA</color>           <!-- Light Orange Border -->
-    <color name="ripple_color">#20EA580C</color>   <!-- Primary color ripple -->
+    <color name="border">#E2E8F0</color>           <!-- Slate 200 Border -->
+    <color name="ripple_color">#200F6CBD</color>   <!-- Primary blue ripple -->
 
     <!-- Status Colors -->
     <color name="success">#10B981</color>
@@ -30,19 +30,38 @@
     <color name="info">#3B82F6</color>
 
     <!-- Navigation & UI Specific -->
-    <color name="bottom_nav_selected">#EA580C</color>
-    <color name="bottom_nav_unselected">#9A3412</color>
-    <color name="drawer_item_selector">#EA580C</color>
-    <color name="drawer_item_inactive">#431407</color>
+    <color name="bottom_nav_selected">#0F6CBD</color>
+    <color name="bottom_nav_unselected">#64748B</color>
+    <color name="drawer_item_inactive">#0F172A</color>
 
-    <!-- Compatibility/Legacy (Mapping to new theme) -->
-    <color name="purple">#EA580C</color>           <!-- Redirecting purple to primary -->
-    <color name="purple_primary">#EA580C</color>
-    <color name="purple_light">#FFEDD5</color>
-    <color name="green">#10B981</color>
-    <color name="blue">#3B82F6</color>
-    <color name="black">#131212</color>
+    <!-- Compatibility/Legacy (Required by some layouts) -->
     <color name="white">#FFFFFF</color>
-    <color name="gray">#9A3412</color>
+    <color name="black">#0F172A</color>
+    <color name="gray">#64748B</color>
+    <color name="purple">#0F6CBD</color>
+    <color name="purple_primary">#0F6CBD</color>
+    <color name="purple_light">#E0F2FE</color>
+    <color name="green">#10B981</color>
+    <color name="blue">#0F6CBD</color>
+    <color name="divider">#E2E8F0</color>
+
+    <color name="success_light">#D1FAE5</color>
+    <color name="warning_light">#FEF3C7</color>
+    <color name="error_light">#FEE2E2</color>
+
+    <!-- Osebo Variants -->
+    <color name="osebo_primary">#0F6CBD</color>
+    <color name="osebo_success">#10B981</color>
+    <color name="osebo_error">#EF4444</color>
+
+    <!-- Teal/Alt Colors (if needed for some specific UI parts) -->
+    <color name="teal_primary">#10B981</color>
+    <color name="teal_dark">#0F766E</color>
+<!--    error color-->
+    <color name="error">#EF4444</color>
+
+    <!-- More Aliases for build compatibility -->
+    <color name="background_page">#F1F5F9</color>
+    <color name="background_secondary">#F8FAFC</color>
 
 </resources>

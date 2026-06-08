@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_page">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="20dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/osebo"
+                android:contentDescription="Osebo Logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="osebo"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" / Create sale"
+                android:textColor="@color/text_muted"
+                android:textSize="14sp" />
+
+            <Space android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Save draft"
+                android:textSize="12sp"
+                app:icon="@drawable/ic_save"
+                app:iconSize="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:text="Preview receipt"
+                android:textSize="12sp"
+                app:icon="@drawable/ic_report"
+                app:iconSize="16dp" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="100dp">
+
+            <!-- STEPPER TABS -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/stepperTabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                app:tabIndicatorColor="@color/success"
+                app:tabSelectedTextColor="@color/success"
+                app:tabTextColor="@color/text_muted"
+                app:tabMode="fixed">
+                <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Customer" />
+                <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Items" />
+                <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Payment" />
+                <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Receipt" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="24dp">
+
+                <!-- LEFT SIDE: CUSTOMER INFO -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/border"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CUSTOMER INFO"
+                            android:textColor="@color/success"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_person"
+                            android:drawablePadding="8dp"
+                            app:drawableTint="@color/success" />
+
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:columnCount="2"
+                            android:alignmentMode="alignMargins">
+
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Customer name" android:textSize="12sp" android:textColor="@color/text_muted" />
+                                <EditText android:id="@+id/etCustName" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input_box" android:layout_marginTop="6dp" android:paddingHorizontal="12dp" android:textSize="14sp" android:text="Amara Nakato" />
+                            </LinearLayout>
+
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:orientation="vertical" android:layout_marginStart="8dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Phone number" android:textSize="12sp" android:textColor="@color/text_muted" />
+                                <EditText android:id="@+id/etCustPhone" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input_box" android:layout_marginTop="6dp" android:paddingHorizontal="12dp" android:textSize="14sp" android:text="+256 772 100 001" />
+                            </LinearLayout>
+
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:orientation="vertical" android:layout_marginTop="16dp" android:layout_marginEnd="8dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Email address" android:textSize="12sp" android:textColor="@color/text_muted" />
+                                <EditText android:id="@+id/etCustEmail" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input_box" android:layout_marginTop="6dp" android:paddingHorizontal="12dp" android:textSize="14sp" android:text="amara.nakato@gmail.com" />
+                            </LinearLayout>
+
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:orientation="vertical" android:layout_marginTop="16dp" android:layout_marginStart="8dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Customer type" android:textSize="12sp" android:textColor="@color/text_muted" />
+                                <Spinner android:id="@+id/spinCustType" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/bg_input_box" android:layout_marginTop="6dp" />
+                            </LinearLayout>
+
+                        </GridLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- RIGHT SIDE: SALE SUMMARY -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/border"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sale summary"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerSummaryItems"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:nestedScrollingEnabled="false"
+                            tools:listitem="@layout/item_cart" />
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border" android:layout_marginVertical="16dp" />
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Subtotal" android:textColor="@color/text_muted" />
+                            <TextView android:id="@+id/txtSubtotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UGX 236,000" android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Discount" android:textColor="@color/text_muted" />
+                            <TextView android:id="@+id/txtDiscount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="— UGX 0" android:textColor="@color/success" android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:gravity="center_vertical">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Apply 18% VAT" android:textSize="12sp" />
+                            <com.google.android.material.materialswitch.MaterialSwitch android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

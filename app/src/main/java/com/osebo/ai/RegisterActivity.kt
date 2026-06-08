@@ -14,6 +14,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hbb20.CountryCodePicker
+import com.osebo.ai.utils.ToastHelper
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -46,6 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         val ccp = findViewById<CountryCodePicker>(R.id.ccp)
         val cbTerms = findViewById<CheckBox>(R.id.cbTerms)
         val btnRegister = findViewById<MaterialButton>(R.id.button)
+        val btnSendOtp = findViewById<MaterialButton>(R.id.btnSendOtp)
         val tvLogin = findViewById<TextView>(R.id.editTextText5)
 
         // Spinner setup
@@ -53,6 +55,19 @@ class RegisterActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, titles)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTitle.adapter = adapter
+
+        btnSendOtp.setOnClickListener {
+            val phone = etPhone.text.toString().trim()
+            if (phone.isEmpty()) {
+                etPhone.error = "Phone number is required for OTP"
+                return@setOnClickListener
+            }
+            // Navigate to Login where OTP is handled
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra("phone_number", ccp.selectedCountryCodeWithPlus + phone)
+            startActivity(intent)
+            finish()
+        }
 
         // =========================
         // REGISTER BUTTON
@@ -126,7 +141,7 @@ class RegisterActivity : AppCompatActivity() {
                             "email" to email,
                             "phoneNumber" to fullPhone,
                             "photoUrl" to null,
-                            "role" to "CASHIER",
+                            "role" to "",
                             "shopId" to "shop_001",
                             "isActive" to true,
                             "createdAt" to System.currentTimeMillis(),

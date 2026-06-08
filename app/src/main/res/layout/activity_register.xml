@@ -317,22 +317,42 @@
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintEnd_toEndOf="@id/rightGuide"
             app:layout_constraintTop_toBottomOf="@id/editTextTextPassword2" />
-        <!-- SEND OTP BUTTON -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+        <!-- ACTION BUTTONS -->
+        <LinearLayout
+            android:id="@+id/registerActions"
             android:layout_width="0dp"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Send OTP"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/primary"
-            app:cornerRadius="14dp"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintEnd_toEndOf="@id/rightGuide"
-            app:layout_constraintTop_toBottomOf="@id/cbTerms" />
+            app:layout_constraintTop_toBottomOf="@id/cbTerms">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/primary"
+                app:cornerRadius="14dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSendOtp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="8dp"
+                android:text="Verify Phone with OTP"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                app:cornerRadius="14dp" />
+
+        </LinearLayout>
 
         <!-- LOGIN ROW -->
         <LinearLayout
@@ -346,7 +366,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintEnd_toEndOf="@id/rightGuide"
-            app:layout_constraintTop_toBottomOf="@id/button">
+            app:layout_constraintTop_toBottomOf="@id/registerActions">
 
             <TextView
                 android:layout_width="wrap_content"

@@ -7,5 +7,6 @@ data class User(
     val phoneNumber: String = "",
     val role: String = "",
     val shopId: String = "",
+    val ownerId: String = "",
     val isActive: Boolean = true
 )

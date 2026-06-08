@@ -30,8 +30,8 @@ class ShopAdapter(
 
         val shop = shopList[position]
 
-        holder.txtShopName.text = shop.shopName
-        holder.txtLocation.text = shop.location
+        holder.txtShopName.text = shop.name
+        holder.txtLocation.text = shop.address
     }
 
     override fun getItemCount(): Int = shopList.size

@@ -1,12 +1,10 @@
 package com.osebo.ai
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.osebo.ai.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -15,36 +13,37 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
-        // Make splash immersive
-        window.setFlags(
-            android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Professional Fade-in Animation
-        val fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-        fadeIn.duration = 1000
-        binding.logoContainer.startAnimation(fadeIn)
+        // Rotate logo continuously
+        val rotateAnimator = ObjectAnimator.ofFloat(
+            binding.ivLogo,
+            "rotation",
+            0f,
+            360f
+        )
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            checkAuthAndNavigate()
-        }, 2000)
-    }
+        rotateAnimator.duration = 1500
+        rotateAnimator.repeatCount = ObjectAnimator.INFINITE
+        rotateAnimator.interpolator = LinearInterpolator()
+        rotateAnimator.start()
 
-    private fun checkAuthAndNavigate() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            // User is signed in, go to Dashboard or Shop selection
-            startActivity(Intent(this, DashboardActivity::class.java))
-        } else {
-            // No user is signed in, go to Register/Login
-            startActivity(Intent(this, RegisterActivity::class.java))
-        }
-        finish()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        // Redirect after 3 seconds
+        binding.root.postDelayed({
+
+            rotateAnimator.cancel()
+
+            startActivity(
+                Intent(
+                    this@SplashActivity,
+                    RegisterActivity::class.java
+                )
+            )
+
+            finish()
+
+        }, 3000)
     }
 }

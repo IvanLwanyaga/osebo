@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_dashboard"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_dashboard"
             android:title="Dashboard" />
 
@@ -36,6 +36,10 @@
                 android:id="@+id/nav_billing"
                 android:icon="@drawable/ic_billing"
                 android:title="Billing" />
+            <item
+                android:id="@+id/nav_subscription"
+                android:icon="@drawable/ic_wallet"
+                android:title="Subscription" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"

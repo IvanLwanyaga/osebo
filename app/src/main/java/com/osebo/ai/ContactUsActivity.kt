@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.osebo.ai.databinding.ActivityContactUsBinding
+import com.osebo.ai.utils.ToastHelper
 
 class ContactUsActivity : AppCompatActivity() {
 
@@ -23,7 +24,7 @@ class ContactUsActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        val phone = "+256758123456"
+        val phone = "+256751367938"
         val email = "support@oseboai.com"
 
         binding.btnCall.setOnClickListener {
@@ -35,6 +36,13 @@ class ContactUsActivity : AppCompatActivity() {
         binding.btnEmail.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = Uri.parse("mailto:$email")
+            startActivity(intent)
+        }
+
+        binding.btnWhatsapp.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=$phone"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
             startActivity(intent)
         }
 
@@ -69,7 +77,7 @@ class ContactUsActivity : AppCompatActivity() {
         db.collection("feedback")
             .add(feedback)
             .addOnSuccessListener {
-                Toast.makeText(this, "Message Sent Successfully!", Toast.LENGTH_LONG).show()
+                ToastHelper.showCustomToast(this, "Message Sent Successfully!")
                 binding.etName.text?.clear()
                 binding.etEmail.text?.clear()
                 binding.etSubject.text?.clear()
@@ -80,7 +88,7 @@ class ContactUsActivity : AppCompatActivity() {
             .addOnFailureListener {
                 binding.btnSendMessage.isEnabled = true
                 binding.btnSendMessage.text = "Send Message"
-                Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                ToastHelper.showCustomToast(this, "Failed to send message!")
             }
     }
 }

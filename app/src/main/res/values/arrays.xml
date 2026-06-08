@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="business_categories">
+        <item>Retail Store</item>
+        <item>Restaurant</item>
+        <item>Bakery</item>
+        <item>Clothing Store</item>
+        <item>Electronics Store</item>
+        <item>Pharmacy</item>
+        <item>Grocery Store</item>
+        <item>Hardware Store</item>
+        <item>Book Store</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="payment_methods">
+        <item>Cash 💵</item>
+        <item>Credit Card 💳</item>
+        <item>Debit Card 💳</item>
+        <item>Mobile Money 📱</item>
+        <item>Bank Transfer 🏦</item>
+        <item>Store Credit 🎫</item>
+    </string-array>
+</resources>

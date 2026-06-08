@@ -2,284 +2,232 @@ package com.osebo.ai
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
+import android.os.CountDownTimer
 import android.view.View
-import android.widget.*
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.*
+import com.osebo.ai.databinding.ActivityLoginBinding
+import com.osebo.ai.utils.ToastHelper
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-    private lateinit var sessionManager: SessionManager
+
+    private var verificationId: String? = null
+    private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+    private var currentPhoneNumber: String = ""
+    private var isOtpSent = false
+
+    private var resendTimer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-        sessionManager = SessionManager(this)
+        setupUI()
+    }
 
-        val rbPhone = findViewById<RadioButton>(R.id.rbPhone)
-        val rbEmail = findViewById<RadioButton>(R.id.rbEmail)
+    private fun setupUI() {
+        // Default states
+        binding.etOtp.visibility = View.GONE
+        binding.tvResendOtp.visibility = View.GONE
+        binding.tvForgotPassword.visibility = View.GONE
 
-        val phoneLayout = findViewById<LinearLayout>(R.id.phoneLayout)
-
-        val etEmail = findViewById<EditText>(R.id.etEmail)
-        val etPhone = findViewById<EditText>(R.id.etPhone)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
-
-        val btnLogin = findViewById<MaterialButton>(R.id.button)
-
-        val tvRegister = findViewById<TextView>(R.id.tvRegister)
-        val tvForgotPassword =
-            findViewById<TextView>(R.id.tvForgotPassword)
-
-        val cbRememberMe =
-            findViewById<CheckBox>(R.id.cbRememberMe)
-
-        val logo =
-            findViewById<ImageView>(R.id.imageView2)
-
-        // Logo animation
-        logo.animate()
-            .translationYBy(-20f)
-            .setDuration(1200)
-            .withEndAction {
-                logo.animate()
-                    .translationYBy(20f)
-                    .setDuration(1200)
-                    .start()
-            }
-            .start()
-
-        // Default = Email Login
-        rbEmail.isChecked = true
-        etEmail.visibility = View.VISIBLE
-        phoneLayout.visibility = View.GONE
-
-        rbEmail.setOnClickListener {
-
-            etEmail.visibility = View.VISIBLE
-            phoneLayout.visibility = View.GONE
-        }
-
-        rbPhone.setOnClickListener {
-
-            phoneLayout.visibility = View.VISIBLE
-            etEmail.visibility = View.GONE
-        }
-
-        // LOGIN BUTTON
-        btnLogin.setOnClickListener {
-
-            val password =
-                etPassword.text.toString().trim()
-
-            if (password.isEmpty()) {
-
-                etPassword.error =
-                    "Password required"
-
-                etPassword.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (password.length < 6) {
-
-                etPassword.error =
-                    "Minimum 6 characters"
-
-                etPassword.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (rbEmail.isChecked) {
-
-                val email =
-                    etEmail.text.toString().trim()
-
-                if (email.isEmpty()) {
-
-                    etEmail.error =
-                        "Email required"
-
-                    etEmail.requestFocus()
-                    return@setOnClickListener
-                }
-
-                if (!Patterns.EMAIL_ADDRESS
-                        .matcher(email)
-                        .matches()
-                ) {
-
-                    etEmail.error =
-                        "Invalid email"
-
-                    etEmail.requestFocus()
-                    return@setOnClickListener
-                }
-
-                btnLogin.isEnabled = false
-                btnLogin.text = "Signing In..."
-
-                loginUser(
-                    email,
-                    password,
-                    cbRememberMe,
-                    btnLogin
-                )
-
+        // Toggle between Email and Phone Login
+        binding.radioGroupLogin.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbPhone) {
+                binding.phoneLayout.visibility = View.VISIBLE
+                binding.etEmail.visibility = View.GONE
+                binding.button.text = "Send OTP"
+                binding.tvForgotPassword.visibility = View.GONE
             } else {
+                binding.phoneLayout.visibility = View.GONE
+                binding.etEmail.visibility = View.VISIBLE
+                binding.button.text = "Sign In"
+                binding.tvForgotPassword.visibility = View.VISIBLE
+            }
+            resetOtpState()
+        }
 
-                Toast.makeText(
-                    this,
-                    "Phone login requires Firebase OTP setup",
-                    Toast.LENGTH_LONG
-                ).show()
+        // Main Button Action
+        binding.button.setOnClickListener {
+            if (binding.rbPhone.isChecked) {
+                if (!isOtpSent) sendOtp() else verifyOtp()
+            } else {
+                emailLogin()
             }
         }
 
-        // Register
-        tvRegister.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    RegisterActivity::class.java
-                )
-            )
+        // Resend OTP
+        binding.tvResendOtp.setOnClickListener {
+            if (currentPhoneNumber.isNotEmpty()) resendOtp()
         }
 
         // Forgot Password
-        tvForgotPassword.setOnClickListener {
+        binding.tvForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
 
-            val email =
-                etEmail.text.toString().trim()
-
-            if (email.isEmpty()) {
-
-                Toast.makeText(
-                    this,
-                    "Enter your email first",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                return@setOnClickListener
-            }
-
-            auth.sendPasswordResetEmail(email)
-                .addOnSuccessListener {
-
-                    Toast.makeText(
-                        this,
-                        "Password reset email sent",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                .addOnFailureListener {
-
-                    Toast.makeText(
-                        this,
-                        it.message,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+        // Register
+        binding.tvRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
-    private fun loginUser(
-        email: String,
-        password: String,
-        cbRememberMe: CheckBox,
-        btnLogin: MaterialButton
-    ) {
+    // ========================= OTP SEND =========================
+    private fun sendOtp() {
+        val rawPhone = binding.etPhone.text.toString().trim()
+        if (rawPhone.isEmpty() || rawPhone.length < 9) {
+            binding.etPhone.error = "Enter valid phone number"
+            return
+        }
 
-        auth.signInWithEmailAndPassword(
-            email,
-            password
-        )
-            .addOnSuccessListener {
+        currentPhoneNumber = binding.ccp.selectedCountryCodeWithPlus + rawPhone
+        setLoading(true, "Sending OTP...")
 
-                val uid =
-                    auth.currentUser?.uid
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(currentPhoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(phoneAuthCallbacks)
+            .build()
 
-                if (uid == null) {
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
 
-                    resetButton(btnLogin)
-                    return@addOnSuccessListener
+    // ========================= RESEND OTP =========================
+    private fun resendOtp() {
+        setLoading(true, "Resending OTP...")
+
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(currentPhoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(phoneAuthCallbacks)
+            .setForceResendingToken(resendToken!!)
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    // ========================= OTP VERIFY =========================
+    private fun verifyOtp() {
+        val code = binding.etOtp.text.toString().trim()
+        if (code.length < 6) {
+            binding.etOtp.error = "Enter 6-digit OTP"
+            return
+        }
+
+        setLoading(true, "Verifying OTP...")
+        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
+        signInWithCredential(credential)
+    }
+
+    // ========================= PHONE AUTH CALLBACKS =========================
+    private val phoneAuthCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+            signInWithCredential(credential)
+        }
+
+        override fun onVerificationFailed(e: FirebaseException) {
+            setLoading(false, "Send OTP")
+            Toast.makeText(this@LoginActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+
+        override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
+            verificationId = id
+            resendToken = token
+            isOtpSent = true
+
+            setLoading(false, "Verify OTP")
+            binding.etOtp.visibility = View.VISIBLE
+            binding.tvResendOtp.visibility = View.VISIBLE
+
+            startResendTimer()
+            Toast.makeText(this@LoginActivity, "OTP sent successfully", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun signInWithCredential(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                setLoading(false, if (isOtpSent) "Verify OTP" else "Sign In")
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
+                    goToDashboard()
+                } else {
+                    Toast.makeText(this, "Verification failed", Toast.LENGTH_SHORT).show()
                 }
-
-                db.collection("users")
-                    .document(uid)
-                    .get()
-                    .addOnSuccessListener { doc ->
-
-                        val role =
-                            doc.getString("role")
-                                ?: "CASHIER"
-
-                        val shopId =
-                            doc.getString("shopId")
-                                ?: ""
-
-                        if (cbRememberMe.isChecked) {
-
-                            sessionManager.saveUserData(
-                                uid,
-                                role,
-                                shopId
-                            )
-                        }
-
-                        Toast.makeText(
-                            this,
-                            "Welcome Back",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        val intent =
-                            Intent(
-                                this,
-                                DashboardActivity::class.java
-                            )
-
-                        startActivity(intent)
-                        finish()
-                    }
-                    .addOnFailureListener {
-
-                        Toast.makeText(
-                            this,
-                            "Failed to load user profile",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        resetButton(btnLogin)
-                    }
-
-            }
-            .addOnFailureListener {
-
-                Toast.makeText(
-                    this,
-                    "Login Failed: ${it.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                resetButton(btnLogin)
             }
     }
 
-    private fun resetButton(
-        btnLogin: MaterialButton
-    ) {
+    // ========================= EMAIL LOGIN =========================
+    private fun emailLogin() {
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString().trim()
 
-        btnLogin.isEnabled = true
-        btnLogin.text = "Login"
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        setLoading(true, "Signing in...")
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                setLoading(false, "Sign In")
+                if (task.isSuccessful) {
+                    goToDashboard()
+                } else {
+                    Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    // ========================= RESEND TIMER =========================
+    private fun startResendTimer() {
+        resendTimer?.cancel()
+        binding.tvResendOtp.isEnabled = false
+
+        resendTimer = object : CountDownTimer(60000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.tvResendOtp.text = "Resend in ${millisUntilFinished / 1000}s"
+            }
+
+            override fun onFinish() {
+                binding.tvResendOtp.text = "Resend OTP"
+                binding.tvResendOtp.isEnabled = true
+            }
+        }.start()
+    }
+
+    // ========================= HELPERS =========================
+    private fun resetOtpState() {
+        isOtpSent = false
+        verificationId = null
+        binding.etOtp.visibility = View.GONE
+        binding.tvResendOtp.visibility = View.GONE
+        resendTimer?.cancel()
+    }
+
+    private fun setLoading(loading: Boolean, buttonText: String) {
+        binding.button.isEnabled = !loading
+        binding.button.text = buttonText
+    }
+
+    private fun goToDashboard() {
+        startActivity(Intent(this, DashboardActivity::class.java))
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        resendTimer?.cancel()
     }
 }

@@ -1,165 +1,167 @@
 package com.osebo.ai
 
 import android.os.Bundle
-import android.widget.*
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.osebo.ai.adapters.POSProductAdapter
+import com.osebo.ai.adapters.CartAdapter
+import com.osebo.ai.databinding.ActivityPosBinding
+import com.osebo.ai.models.Product
+import com.osebo.ai.models.CartItem
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import java.util.*
 
 class POSActivity : AppCompatActivity() {
 
-    private lateinit var db: FirebaseFirestore
+    private lateinit var binding: ActivityPosBinding
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    
+    private val productList = mutableListOf<Product>()
+    private val filteredList = mutableListOf<Product>()
+    private val cart = mutableMapOf<String, CartItem>()
+    
+    private lateinit var productAdapter: POSProductAdapter
+    private lateinit var cartAdapter: CartAdapter
 
-    private val cart = mutableListOf<CartItem>()
-    private lateinit var listView: ListView
-    private lateinit var tvTotal: TextView
-    private lateinit var btnCheckout: Button
-
-    private var totalAmount = 0.0
+    private val barcodeLauncher = registerForActivityResult(ScanContract()) { result ->
+        if (result.contents != null) {
+            binding.etSearchProduct.setText(result.contents)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pos)
+        binding = ActivityPosBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        db = FirebaseFirestore.getInstance()
-
-        listView = findViewById(R.id.listViewProducts)
-        tvTotal = findViewById(R.id.tvTotal)
-        btnCheckout = findViewById(R.id.btnCheckout)
-
+        setupUI()
         loadProducts()
+    }
 
-        btnCheckout.setOnClickListener {
-            checkout()
+    private fun setupUI() {
+        productAdapter = POSProductAdapter(filteredList) { product ->
+            addToCart(product)
+        }
+        binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
+        binding.recyclerProducts.adapter = productAdapter
+        
+        cartAdapter = CartAdapter(cart.values.toList()) {
+            updateCartUI()
+        }
+        binding.recyclerCart.layoutManager = LinearLayoutManager(this)
+        binding.recyclerCart.adapter = cartAdapter
+
+        binding.etSearchProduct.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterProducts(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.btnScanBarcodeCard.setOnClickListener {
+            barcodeLauncher.launch(ScanOptions().setPrompt("Scan product barcode"))
+        }
+
+        binding.btnScanBarcode.setOnClickListener {
+            barcodeLauncher.launch(ScanOptions().setPrompt("Scan product barcode"))
+        }
+
+        binding.btnViewCart.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.END)
+        }
+
+        binding.btnCheckout.setOnClickListener {
+            completeSale()
         }
     }
 
-    // =========================
-    // LOAD PRODUCTS
-    // =========================
     private fun loadProducts() {
-
-        db.collection("products")
+        val shopId = intent.getStringExtra("SHOP_ID") ?: ""
+        db.collection("inventory")
+            .whereEqualTo("shopId", shopId)
             .get()
             .addOnSuccessListener { result ->
-
-                val productNames = mutableListOf<String>()
-
+                productList.clear()
                 for (doc in result) {
-                    val name = doc.getString("name") ?: ""
-                    val price = doc.getDouble("price") ?: 0.0
-                    val stock = doc.getLong("stockQuantity") ?: 0
-
-                    productNames.add("$name - UGX $price (Stock: $stock)")
+                    val p = doc.toObject(Product::class.java)
+                    productList.add(p)
                 }
-
-                val adapter = ArrayAdapter(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    productNames
-                )
-
-                listView.adapter = adapter
-
-                listView.setOnItemClickListener { _, _, position, _ ->
-
-                    val doc = result.documents[position]
-
-                    val product = CartItem(
-                        id = doc.id,
-                        name = doc.getString("name") ?: "",
-                        price = doc.getDouble("price") ?: 0.0,
-                        quantity = 1
-                    )
-
-                    addToCart(product)
-                }
+                filterProducts("")
             }
     }
 
-    // =========================
-    // ADD TO CART
-    // =========================
-    private fun addToCart(item: CartItem) {
+    private fun filterProducts(query: String) {
+        filteredList.clear()
+        if (query.isEmpty()) {
+            filteredList.addAll(productList)
+        } else {
+            filteredList.addAll(productList.filter { 
+                it.name.contains(query, ignoreCase = true) || 
+                it.barcode == query || it.sku == query
+            })
+        }
+        productAdapter.notifyDataSetChanged()
+    }
 
-        val existing = cart.find { it.id == item.id }
-
+    private fun addToCart(product: Product) {
+        val existing = cart[product.id]
         if (existing != null) {
             existing.quantity += 1
         } else {
-            cart.add(item)
+            cart[product.id] = CartItem(
+                id = product.id,
+                name = product.name,
+                price = product.price,
+                costPrice = product.costPrice,
+                quantity = 1
+            )
         }
-
-        calculateTotal()
-        Toast.makeText(this, "${item.name} added", Toast.LENGTH_SHORT).show()
+        updateCartUI()
+        Toast.makeText(this, "${product.name} added", Toast.LENGTH_SHORT).show()
     }
 
-    // =========================
-    // CALCULATE TOTAL
-    // =========================
-    private fun calculateTotal() {
-
-        totalAmount = cart.sumOf {
-            it.price * it.quantity
-        }
-
-        tvTotal.text = "Total: UGX $totalAmount"
+    private fun updateCartUI() {
+        val cartItems = cart.values.toList()
+        val total = cartItems.sumOf { it.price * it.quantity }
+        val count = cartItems.sumOf { it.quantity }
+        
+        binding.tvItemCount.text = "$count Items"
+        binding.tvTotalAmount.text = "UGX %,.0f".format(total)
+        
+        cartAdapter = CartAdapter(cartItems) { updateCartUI() }
+        binding.recyclerCart.adapter = cartAdapter
     }
 
-    // =========================
-    // CHECKOUT
-    // =========================
-    private fun checkout() {
-
-        if (cart.isEmpty()) {
-            Toast.makeText(this, "Cart is empty", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+    private fun completeSale() {
+        if (cart.isEmpty()) return
+        
         val saleId = UUID.randomUUID().toString()
-
-        val sale = hashMapOf(
+        val total = cart.values.sumOf { it.price * it.quantity }
+        
+        val saleData = hashMapOf(
             "id" to saleId,
-            "totalAmount" to totalAmount,
+            "shopId" to (intent.getStringExtra("SHOP_ID") ?: ""),
+            "totalAmount" to total,
+            "paymentMethod" to if (binding.rbCash.isChecked) "Cash" else "Mobile Money",
             "createdAt" to System.currentTimeMillis()
         )
 
-        db.collection("sales")
-            .document(saleId)
-            .set(sale)
+        db.collection("sales").document(saleId).set(saleData)
             .addOnSuccessListener {
-
-                // Update stock
-                for (item in cart) {
-                    reduceStock(item.id, item.quantity)
-                }
-
+                Toast.makeText(this, "Sale Completed!", Toast.LENGTH_LONG).show()
                 cart.clear()
-                calculateTotal()
-
-                Toast.makeText(
-                    this,
-                    "Sale completed successfully",
-                    Toast.LENGTH_LONG
-                ).show()
+                updateCartUI()
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+                finish()
             }
-    }
-
-    // =========================
-    // STOCK REDUCTION
-    // =========================
-    private fun reduceStock(productId: String, qty: Int) {
-
-        val ref = db.collection("products").document(productId)
-
-        db.runTransaction { transaction ->
-
-            val snapshot = transaction.get(ref)
-
-            val currentStock = snapshot.getLong("stockQuantity") ?: 0
-            val newStock = currentStock - qty
-
-            transaction.update(ref, "stockQuantity", newStock)
-        }
     }
 }

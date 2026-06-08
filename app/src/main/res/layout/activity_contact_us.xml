@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:gravity="center"
-                        android:text="+256 758 123 456"
+                        android:text="+256 751 367 938"
                         android:textAlignment="center"
                         android:textColor="#6B7280"
                         android:textSize="13sp"/>
@@ -150,10 +150,13 @@
             <!-- WHATSAPP CARD -->
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnWhatsapp"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#F0FDF4"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="2dp">
@@ -185,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:gravity="center"
-                        android:text="+256 758 123 456"
+                        android:text="+256 751 367 938"
                         android:textAlignment="center"
                         android:textColor="#6B7280"
                         android:textSize="13sp"/>

@@ -2,18 +2,87 @@
 <resources>
 
     <!-- APP NAME -->
-    <string name="app_name">Osebo AI</string>
+    <string name="app_name">Osebo</string>
 
     <!-- GENERAL -->
     <string name="app_tagline">Intelligent Business Management</string>
     <string name="app_version">v1.0.0</string>
     <string name="welcome">Welcome</string>
+    <string name="welcome_back">Welcome back,</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="phone">Phone Number</string>
     <string name="contact_us">Contact Us</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="void_all">Void All</string>
+    <string name="void_label">Void</string>
+    <string name="success">Success</string>
+    <string name="retry">Retry</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="settings">Settings</string>
+
+    <!-- DASHBOARD -->
+    <string name="total_revenue">TOTAL SALES REVENUE</string>
+    <string name="net_profit">NET PROFIT</string>
+    <string name="transactions">TRANSACTIONS</string>
+    <string name="orders">Orders</string>
+    <string name="products">Products</string>
+    <string name="customers">Customers</string>
+    <string name="sales">Sales</string>
+    <string name="weekly_insights">Weekly Insights</string>
+    <string name="shop_performance">Shop Performance</string>
+    <string name="recent_activities">Recent Activities</string>
+    <string name="your_shops">Your Shops</string>
+    <string name="see_all">See All</string>
+    <string name="quick_management">Quick Management</string>
+    <string name="new_sale">New Sale</string>
+    <string name="product_label">Product</string>
+    <string name="shop_label">Shop</string>
+    <string name="employee">Employee</string>
+    <string name="reports">Reports</string>
+
+    <!-- CREATE SHOP -->
+    <string name="create_shop_title">Create New Shop</string>
+    <string name="start_journey">Start Your Journey</string>
+    <string name="register_shop_desc">Register your shop branch to start selling</string>
+    <string name="shop_name_hint">Shop Name *</string>
+    <string name="business_category_hint">Business Category *</string>
+    <string name="location_hint">Location *</string>
+    <string name="description_optional">Description (Optional)</string>
+    <string name="confirm_correct">I confirm this information is correct</string>
+    <string name="create_shop_button">Create Shop</string>
+    <string name="select_business_type">Please select a business type</string>
+    <string name="accept_terms">Please accept the terms and conditions</string>
+    <string name="shop_created_success">Your shop has been created successfully!</string>
+    <string name="continue_to_dashboard">Continue to Dashboard</string>
+    <string name="add_logo">Add Shop Logo</string>
+    <string name="tax_number">Tax/VAT Number (Optional)</string>
+    <string name="opening_hours">Opening Hours</string>
+    <string name="mon_fri">Mon-Fri</string>
+    <string name="sat_sun">Sat-Sun</string>
+    <string name="full_week">Full Week</string>
+
+    <!-- POS / CREATE SALE -->
+    <string name="pos_terminal_title">Digital Cashier</string>
+    <string name="search_product_hint">Scan or type item name...</string>
+    <string name="transaction_details">TRANSACTION DETAILS</string>
+    <string name="select_customer">Select Customer</string>
+    <string name="payment_channel">Payment Channel</string>
+    <string name="invoice_items">Invoice Items</string>
+    <string name="no_items_selected">No items selected</string>
+    <string name="grand_total">GRAND TOTAL</string>
+    <string name="complete_print_receipt">Complete &amp; Print Receipt</string>
+    <string name="items_label">items</string>
+
+    <!-- Validation / Error Messages -->
+    <string name="no_internet">No internet connection</string>
+    <string name="network_error">Network error</string>
+    <string name="required_field">This field is required</string>
+    <string name="invalid_phone">Invalid phone number</string>
 
     <!-- TITLES -->
     <string-array name="titles">

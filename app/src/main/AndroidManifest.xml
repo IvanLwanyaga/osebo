@@ -5,13 +5,17 @@
 
     <application
         android:allowBackup="true"
+        android:icon="@drawable/osebo"
         android:label="Osebo"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Osebo">
         <activity
-            android:name=".activities.ShopsActivity"
+            android:name=".SaleActivity"
             android:exported="false" />
-        <!-- SPLASH (ENTRY POINT) -->
+        <activity
+            android:name=".ShopsActivity"
+            android:exported="false" /> <!-- SPLASH (ENTRY POINT) -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -28,13 +32,29 @@
         <activity android:name=".InventoryActivity" />
         <activity android:name=".SalesActivity" />
         <activity android:name=".CreateShopActivity" />
+        <activity android:name=".ShopDetailActivity" />
+        <activity android:name=".ShopOperationalActivity" />
         <activity android:name=".CreateSaleActivity" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".SubscriptionActivity" />
+        <activity android:name=".PackageSelectionActivity" />
+        <activity android:name=".ActivationActivity" />
+        <activity android:name=".BillingActivity" />
         <activity android:name=".ContactUsActivity" />
         <activity android:name=".MoreActivity" />
         <activity android:name=".HRActivity" />
         <activity android:name=".FinanceActivity" />
         <activity android:name=".AddProductActivity" />
+        <activity android:name=".SuppliersActivity" />
+        <activity android:name=".CustomersActivity" />
+        <activity android:name=".AddCustomerActivity" />
+        <activity android:name=".NotificationsActivity" />
+        <activity android:name=".POSActivity" />
+        <activity android:name=".OnboardingActivity" />
+        <activity android:name=".SaleReceiptActivity" />
+        <activity android:name=".CreateUserActivity" />
+        <activity android:name=".EmployeeActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
     </application>
 
 </manifest>

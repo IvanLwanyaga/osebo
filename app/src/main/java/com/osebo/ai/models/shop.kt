@@ -1,7 +1,7 @@
 package com.osebo.ai.models
 
 data class Shop(
-    val id: String = "",
+    var id: String = "",
     val name: String = "",
     val category: String = "",
     val address: String = "",

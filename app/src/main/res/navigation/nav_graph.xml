@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.osebo.ai.ui.fragments.ShopDashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/activity_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_sales"
+        android:name="com.osebo.ai.ui.fragments.SalesFragment"
+        android:label="Sales"
+        tools:layout="@layout/fragment_sales" />
+
+    <fragment
+        android:id="@+id/nav_inventory"
+        android:name="com.osebo.ai.ui.fragments.InventoryFragment"
+        android:label="Inventory"
+        tools:layout="@layout/fragment_inventory" />
+
+    <fragment
+        android:id="@+id/nav_reports"
+        android:name="com.osebo.ai.ui.fragments.ReportsFragment"
+        android:label="Reports"
+        tools:layout="@layout/fragment_reports" />
+
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.osebo.ai.ui.fragments.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account" />
+
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.osebo.ai.ui.fragments.EmployeeFragment"
+        android:label="Employee"
+        tools:layout="@layout/fragment_employee" />
+
+    <fragment
+        android:id="@+id/nav_billing"
+        android:name="com.osebo.ai.ui.fragments.TransactionsFragment"
+        android:label="Transactions"
+        tools:layout="@layout/fragment_transactions" />
+
+    <fragment
+        android:id="@+id/nav_subscription"
+        android:name="com.osebo.ai.ui.fragments.SubscriptionPackageFragment"
+        android:label="Packages"
+        tools:layout="@layout/fragment_subscription_package" />
+
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="com.osebo.ai.ui.fragments.FaqDetailsFragment"
+        android:label="Contact Us"
+        tools:layout="@layout/fragment_faq_details" />
+
+    <!-- Additional Fragments -->
+    <fragment
+        android:id="@+id/fragment_add_expense"
+        android:name="com.osebo.ai.ui.fragments.AddExpenseFragment"
+        android:label="Add Expense"
+        tools:layout="@layout/fragment_add_expense" />
+
+    <fragment
+        android:id="@+id/fragment_add_product"
+        android:name="com.osebo.ai.ui.fragments.AddProductFragment"
+        android:label="Add Product"
+        tools:layout="@layout/fragment_add_product" />
+
+    <fragment
+        android:id="@+id/fragment_edit_shops"
+        android:name="com.osebo.ai.ui.fragments.EditShopsFragment"
+        android:label="Edit Shops"
+        tools:layout="@layout/fragment_edit_shops" />
+
+    <fragment
+        android:id="@+id/fragment_product_details"
+        android:name="com.osebo.ai.ui.fragments.ProductDetailsFragment"
+        android:label="Product Details"
+        tools:layout="@layout/fragment_product_details" />
+
+    <fragment
+        android:id="@+id/fragment_restock"
+        android:name="com.osebo.ai.ui.fragments.RestockFragment"
+        android:label="Restock"
+        tools:layout="@layout/fragment_restock" />
+
+    <fragment
+        android:id="@+id/fragment_sessions"
+        android:name="com.osebo.ai.ui.fragments.SessionsFragment"
+        android:label="Sessions"
+        tools:layout="@layout/fragment_sessions" />
+
+    <fragment
+        android:id="@+id/fragment_shop_settings"
+        android:name="com.osebo.ai.ui.fragments.ShopSettingsFragment"
+        android:label="Shop Settings"
+        tools:layout="@layout/fragment_shop_settings" />
+
+    <fragment
+        android:id="@+id/fragment_subscription_details"
+        android:name="com.osebo.ai.ui.fragments.SubscriptionDetailsFragment"
+        android:label="Subscription Details"
+        tools:layout="@layout/fragment_subscription_details" />
+
+    <fragment
+        android:id="@+id/fragment_suppliers"
+        android:name="com.osebo.ai.ui.fragments.SuppliersFragment"
+        android:label="Suppliers"
+        tools:layout="@layout/fragment_suppliers" />
+
+    <fragment
+        android:id="@+id/fragment_otp_verification"
+        android:name="com.osebo.ai.ui.fragments.OtpVerificationFragment"
+        android:label="Verify OTP"
+        tools:layout="@layout/fragment_otp_verification" />
+
+    <!-- Dialogs -->
+    <dialog
+        android:id="@+id/dialog_add_employee"
+        android:name="com.osebo.ai.ui.fragments.AddEmployeeDialogFragment"
+        android:label="Add Employee"
+        tools:layout="@layout/dialog_add_employee" />
+
+    <dialog
+        android:id="@+id/dialog_add_role"
+        android:name="com.osebo.ai.ui.fragments.AddRoleDialogFragment"
+        android:label="Add Role"
+        tools:layout="@layout/dialog_add_role" />
+
+    <dialog
+        android:id="@+id/dialog_filter"
+        android:name="com.osebo.ai.ui.fragments.FilterDialogFragment"
+        android:label="Filter"
+        tools:layout="@layout/dialog_filter" />
+
+    <dialog
+        android:id="@+id/dialog_payment"
+        android:name="com.osebo.ai.ui.fragments.PaymentDialogFragment"
+        android:label="Payment"
+        tools:layout="@layout/dialog_payment" />
+
+</navigation>

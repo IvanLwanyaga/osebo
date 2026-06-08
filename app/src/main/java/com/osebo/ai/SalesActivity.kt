@@ -1,94 +1,124 @@
 package com.osebo.ai
 
-import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.snackbar.Snackbar
+import com.osebo.ai.adapters.SaleAdapter
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.osebo.ai.databinding.ActivitySalesBinding
 import com.osebo.ai.models.Sale
-import com.osebo.ai.models.Shop
+import com.osebo.ai.models.SaleStatus
+import com.osebo.ai.models.PaymentMethod
+import com.osebo.ai.models.CustomerType
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SalesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySalesBinding
-    private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+    private lateinit var db: FirebaseFirestore
+    private lateinit var salesAdapter: SaleAdapter
+    private var salesList = mutableListOf<Sale>()
+    private var filteredSalesList = mutableListOf<Sale>()
 
-    private val salesList = mutableListOf<Sale>()
-    private lateinit var saleAdapter: SaleAdapter
-    
-    private var shopsListener: ListenerRegistration? = null
-    private var salesListener: ListenerRegistration? = null
+    private var selectedInterval = "All"
+    private var selectedPayment = "All"
+    private var selectedStatus = "All"
+    private var searchQuery = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySalesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupUI()
-        startRealtimeListeners()
+        db = Firebase.firestore
+
+        setupToolbar()
+        setupRecyclerView()
+        setupFilters()
+        setupSearch()
+        loadSales()
     }
 
-    private fun setupUI() {
-        saleAdapter = SaleAdapter(salesList)
-        binding.recyclerSales.layoutManager = LinearLayoutManager(this)
-        binding.recyclerSales.adapter = saleAdapter
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.toolbar.setNavigationOnClickListener { finish() }
+    }
 
-        binding.btnNewSale.setOnClickListener {
-            startActivity(Intent(this, CreateSaleActivity::class.java))
+    private fun setupRecyclerView() {
+        salesAdapter = SaleAdapter(filteredSalesList) { sale ->
+            // show detail
+        }
+
+        binding.recyclerSales.apply {
+            layoutManager = LinearLayoutManager(this@SalesActivity)
+            adapter = salesAdapter
         }
     }
 
-    private fun startRealtimeListeners() {
-        val userId = auth.currentUser?.uid ?: return
+    private fun setupFilters() {
+        val intervals = arrayOf("All", "Today", "This Week", "This Month")
+        val adapterInterval = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, intervals)
+        binding.autoInterval.setAdapter(adapterInterval)
+        binding.autoInterval.setOnItemClickListener { _, _, position, _ ->
+            selectedInterval = intervals[position]
+            applyFilters()
+        }
 
-        // 1. Get user's shops first to filter sales
-        shopsListener = db.collection("shops")
+        val payments = listOf("All") + PaymentMethod.values().map { it.displayName }
+        val adapterPayment = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, payments)
+        binding.autoPayment.setAdapter(adapterPayment)
+        binding.autoPayment.setOnItemClickListener { _, _, position, _ ->
+            selectedPayment = payments[position]
+            applyFilters()
+        }
+    }
+
+    private fun setupSearch() {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchQuery = s.toString()
+                applyFilters()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun loadSales() {
+        val userId = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid ?: return
+        db.collection("sales")
             .whereEqualTo("ownerId", userId)
             .addSnapshotListener { value, error ->
                 if (error != null) return@addSnapshotListener
-                
-                val userShopIds = value?.documents?.mapNotNull { it.id } ?: emptyList()
-                
-                if (userShopIds.isNotEmpty()) {
-                    listenForSales(userShopIds)
-                } else {
-                    binding.txtEmpty.visibility = View.VISIBLE
-                    salesList.clear()
-                    saleAdapter.notifyDataSetChanged()
-                }
-            }
-    }
-
-    private fun listenForSales(shopIds: List<String>) {
-        salesListener?.remove()
-        
-        salesListener = db.collection("sales")
-            .whereIn("shopId", shopIds)
-            .orderBy("createdAt", Query.Direction.DESCENDING)
-            .addSnapshotListener { value, error ->
-                if (error != null) return@addSnapshotListener
-                
                 salesList.clear()
                 value?.documents?.forEach { doc ->
-                    val sale = doc.toObject(Sale::class.java)
-                    if (sale != null) salesList.add(sale)
+                    doc.toObject(Sale::class.java)?.let { salesList.add(it.copy(id = doc.id)) }
                 }
-                
-                saleAdapter.notifyDataSetChanged()
-                binding.txtEmpty.visibility = if (salesList.isEmpty()) View.VISIBLE else View.GONE
-                binding.txtSaleSummary.text = "${salesList.size} transactions total"
+                applyFilters()
             }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        shopsListener?.remove()
-        salesListener?.remove()
+    private fun applyFilters() {
+        filteredSalesList.clear()
+        filteredSalesList.addAll(salesList.filter { sale ->
+            val matchSearch = sale.id.contains(searchQuery, true) || sale.customerName.contains(searchQuery, true)
+            val matchPayment = selectedPayment == "All" || sale.paymentMethod == selectedPayment
+            matchSearch && matchPayment
+        })
+        salesAdapter.updateSales(filteredSalesList)
+        
+        binding.txtEmpty.visibility = if (filteredSalesList.isEmpty()) View.VISIBLE else View.GONE
+        binding.recyclerSales.visibility = if (filteredSalesList.isEmpty()) View.GONE else View.VISIBLE
     }
 }

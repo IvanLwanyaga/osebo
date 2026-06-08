@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.osebo.ai.adapters.ShopAdapter
 import com.osebo.ai.databinding.ActivityShopsBinding
 import com.osebo.ai.models.Shop
 
@@ -31,6 +32,8 @@ class ShopsActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        binding.btnBack.setOnClickListener { finish() }
+
         shopAdapter = ShopAdapter(shopList)
         binding.recyclerShops.layoutManager = LinearLayoutManager(this)
         binding.recyclerShops.adapter = shopAdapter

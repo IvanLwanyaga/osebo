@@ -27,6 +27,10 @@ class MoreActivity : AppCompatActivity() {
             startActivity(Intent(this, ContactUsActivity::class.java))
         }
 
+        binding.cardBusiness.setOnClickListener {
+            startActivity(Intent(this, HRActivity::class.java))
+        }
+
         binding.btnLogout.setOnClickListener {
             logout()
         }
