@@ -1,9 +1,11 @@
 package com.osebo.ai
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.XAxis
@@ -77,6 +79,9 @@ class DashboardActivity : AppCompatActivity() {
         binding.btnReports.setOnClickListener      { startActivity(Intent(this, ReportsActivity::class.java)) }
         binding.btnSeeAll.setOnClickListener       { startActivity(Intent(this, ShopsActivity::class.java)) }
         binding.btnCustomers.setOnClickListener    { startActivity(Intent(this, CustomersActivity::class.java)) }
+        binding.btnOrders.setOnClickListener       { startActivity(Intent(this, SalesActivity::class.java)) }
+        binding.btnProducts.setOnClickListener     { startActivity(Intent(this, InventoryActivity::class.java)) }
+        binding.btnSales.setOnClickListener        { startActivity(Intent(this, SalesActivity::class.java)) }
 
         binding.imgAvatar.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -84,6 +89,9 @@ class DashboardActivity : AppCompatActivity() {
 
         setupBottomNavigation()
         setupNavigationDrawer()
+        // Initialize charts with empty state
+        setupWeeklySalesChart(emptyList())
+        setupRevenueChart(emptyList())
     }
 
     private fun startRealtimeListeners() {
@@ -206,29 +214,52 @@ class DashboardActivity : AppCompatActivity() {
 
         val entries = dailyTotals.mapIndexed { i, v -> Entry(i.toFloat(), v) }
 
+        val primaryColor = ContextCompat.getColor(this, R.color.primary)
         val dataSet = LineDataSet(entries, "This week's sales").apply {
             lineWidth        = 3f
-            circleRadius     = 4f
+            circleRadius     = 5f
             setDrawValues(false)
             mode             = LineDataSet.Mode.CUBIC_BEZIER
-            color            = android.graphics.Color.BLUE
-            setCircleColor(android.graphics.Color.BLUE)
+            color            = primaryColor
+            setCircleColor(primaryColor)
+            setDrawFilled(true)
+            fillColor        = primaryColor
+            fillAlpha        = 30
+            setDrawCircles(true)
+            setDrawCircleHole(true)
+            circleHoleRadius = 2.5f
+            circleHoleColor  = Color.WHITE
         }
 
         val dayLabels = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+        val labelColor = ContextCompat.getColor(this, R.color.textLight)
 
         binding.weeklySalesChart.apply {
             data        = LineData(dataSet)
             description.isEnabled = false
             axisRight.isEnabled   = false
+            legend.isEnabled      = false
             xAxis.apply {
                 position       = XAxis.XAxisPosition.BOTTOM
                 granularity    = 1f
                 valueFormatter = IndexAxisValueFormatter(dayLabels)
                 setDrawGridLines(false)
+                textColor      = labelColor
+                axisLineColor  = ContextCompat.getColor(this@DashboardActivity, R.color.border)
             }
-            axisLeft.setDrawGridLines(false)
-            animateX(500)
+            axisLeft.apply {
+                setDrawGridLines(true)
+                gridColor      = ContextCompat.getColor(this@DashboardActivity, R.color.border)
+                gridLineWidth  = 0.5f
+                textColor      = labelColor
+                axisLineColor  = Color.TRANSPARENT
+                setDrawAxisLine(false)
+            }
+            setTouchEnabled(true)
+            setScaleEnabled(false)
+            setPinchZoom(false)
+            notifyDataSetChanged()
+            animateX(800)
             invalidate()
         }
     }
@@ -255,28 +286,45 @@ class DashboardActivity : AppCompatActivity() {
 
         val entries = buckets.mapIndexed { i, b -> BarEntry(i.toFloat(), b.total) }
 
+        val secondaryColor = ContextCompat.getColor(this, R.color.secondary)
         val dataSet = BarDataSet(entries, "Monthly revenue").apply {
             setDrawValues(false)
-            color = android.graphics.Color.CYAN
+            color = secondaryColor
+            highLightAlpha = 0
         }
 
         val monthLabels = buckets.map { b ->
             val tmp = Calendar.getInstance().apply { set(b.year, b.month, 1) }
             SimpleDateFormat("MMM", Locale.getDefault()).format(tmp.time)
         }
+        val labelColor = ContextCompat.getColor(this, R.color.textLight)
 
         binding.monthlyRevenueChart.apply {
-            data        = BarData(dataSet)
+            data        = BarData(dataSet).apply {
+                barWidth = 0.6f
+            }
             description.isEnabled = false
             axisRight.isEnabled   = false
+            legend.isEnabled      = false
             xAxis.apply {
                 position       = XAxis.XAxisPosition.BOTTOM
                 granularity    = 1f
                 valueFormatter = IndexAxisValueFormatter(monthLabels)
                 setDrawGridLines(false)
+                textColor      = labelColor
+                axisLineColor  = ContextCompat.getColor(this@DashboardActivity, R.color.border)
             }
-            axisLeft.setDrawGridLines(false)
-            animateY(500)
+            axisLeft.apply {
+                setDrawGridLines(true)
+                gridColor      = ContextCompat.getColor(this@DashboardActivity, R.color.border)
+                gridLineWidth  = 0.5f
+                textColor      = labelColor
+                axisLineColor  = Color.TRANSPARENT
+                setDrawAxisLine(false)
+            }
+            setFitBars(true)
+            notifyDataSetChanged()
+            animateY(800)
             invalidate()
         }
     }
@@ -307,7 +355,11 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        shopAdapter = ShopAdapter(shopList)
+        shopAdapter = ShopAdapter(shopList) { shop ->
+            val intent = Intent(this, ShopOperationalActivity::class.java)
+            intent.putExtra("SHOP_ID", shop.id)
+            startActivity(intent)
+        }
         binding.recyclerShops.apply {
             layoutManager          = LinearLayoutManager(this@DashboardActivity)
             adapter                = shopAdapter
@@ -363,9 +415,35 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupNavigationDrawer() {
         binding.navView.setNavigationItemSelectedListener { item ->
+            // Use a slight delay to close the drawer for better UX/responsiveness
             binding.drawerLayout.closeDrawer(GravityCompat.START)
+            
             when (item.itemId) {
                 R.id.nav_home -> true
+                R.id.nav_all_shops -> {
+                    startActivity(Intent(this, ShopsActivity::class.java))
+                    true
+                }
+                R.id.nav_account -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                    true
+                }
+                R.id.nav_contact -> {
+                    startActivity(Intent(this, ContactUsActivity::class.java))
+                    true
+                }
+                R.id.nav_admin -> {
+                    startActivity(Intent(this, HRActivity::class.java))
+                    true
+                }
+                R.id.nav_billing -> {
+                    startActivity(Intent(this, BillingActivity::class.java))
+                    true
+                }
+                R.id.nav_subscription -> {
+                    startActivity(Intent(this, SubscriptionActivity::class.java))
+                    true
+                }
                 R.id.nav_logout -> {
                     auth.signOut()
                     goToLogin()

@@ -14,29 +14,31 @@
     <color name="bg_page">#F1F5F9</color>          <!-- Soft Blue-Gray Background -->
     <color name="bg_surface">#F8FAFC</color>       <!-- Light Surface -->
 
-    <color name="textDark">#0F172A</color>         <!-- Slate 900 -->
-    <color name="text_primary">#0F172A</color>     <!-- Alias for dark text -->
-    <color name="textLight">#64748B</color>        <!-- Slate 500 for subtext -->
-    <color name="text_muted">#64748B</color>       <!-- Alias for muted text -->
-    <color name="text_secondary">#334155</color>   <!-- Slate 700 -->
+    <!-- Text Colors (Pure Blue Palette - NO BLACK) -->
+    <color name="textDark">#0F6CBD</color>         <!-- Main Blue for Titles -->
+    <color name="text_primary">#0F6CBD</color>     <!-- Primary Blue text -->
+    <color name="textLight">#64748B</color>        <!-- Slate Blue for subtext -->
+    <color name="text_muted">#64748B</color>       <!-- Muted Slate Blue -->
+    <color name="text_secondary">#0EA5E9</color>   <!-- Sky Blue secondary -->
 
-    <color name="border">#E2E8F0</color>           <!-- Slate 200 Border -->
+    <color name="border">#E2E8F0</color>           <!-- Light Slate Border -->
     <color name="ripple_color">#200F6CBD</color>   <!-- Primary blue ripple -->
 
     <!-- Status Colors -->
     <color name="success">#10B981</color>
     <color name="danger">#EF4444</color>
+    <color name="error">#EF4444</color>
     <color name="warning">#F59E0B</color>
     <color name="info">#3B82F6</color>
 
     <!-- Navigation & UI Specific -->
     <color name="bottom_nav_selected">#0F6CBD</color>
     <color name="bottom_nav_unselected">#64748B</color>
-    <color name="drawer_item_inactive">#0F172A</color>
-
-    <!-- Compatibility/Legacy (Required by some layouts) -->
+    <color name="drawer_item_inactive">#0F6CBD</color>
+    <color name="bottom_nav_color">#6B7280</color>
+    <!-- Compatibility/Legacy (All mapped to Blue/White) -->
     <color name="white">#FFFFFF</color>
-    <color name="black">#0F172A</color>
+    <color name="black">#0F6CBD</color>            <!-- All legacy Black is now Blue -->
     <color name="gray">#64748B</color>
     <color name="purple">#0F6CBD</color>
     <color name="purple_primary">#0F6CBD</color>
@@ -53,15 +55,5 @@
     <color name="osebo_primary">#0F6CBD</color>
     <color name="osebo_success">#10B981</color>
     <color name="osebo_error">#EF4444</color>
-
-    <!-- Teal/Alt Colors (if needed for some specific UI parts) -->
-    <color name="teal_primary">#10B981</color>
-    <color name="teal_dark">#0F766E</color>
-<!--    error color-->
-    <color name="error">#EF4444</color>
-
-    <!-- More Aliases for build compatibility -->
-    <color name="background_page">#F1F5F9</color>
-    <color name="background_secondary">#F8FAFC</color>
 
 </resources>
