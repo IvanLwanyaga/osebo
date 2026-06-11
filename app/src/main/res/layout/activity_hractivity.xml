@@ -25,14 +25,14 @@
                 android:text="Admin Panel"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:textColor="#1A1A2E" />
+                android:textColor="@color/primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Osebo POS - Super admin"
+                android:text="Osebo - Super admin"
                 android:textSize="14sp"
-                android:textColor="#666666"
+                android:textColor="@color/textLight"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:text="TODAY'S SALES"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/textLight"
                         android:textStyle="bold" />
 
                     <TextView
@@ -74,7 +74,7 @@
                         android:text="UGX 0"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"
+                        android:textColor="@color/primary"
                         android:layout_marginTop="8dp" />
 
                     <TextView
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:text="0% vs yesterday"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/textLight"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -156,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:text="STAFF ONLINE"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/textLight"
                         android:textStyle="bold" />
 
                     <TextView
@@ -166,7 +166,7 @@
                         android:text="0 / 0"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E"
+                        android:textColor="@color/primary"
                         android:layout_marginTop="8dp" />
 
                     <TextView
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:text="0 offline"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/textLight"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -233,7 +233,7 @@
             android:text="BUSINESS OPERATIONS"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#1A1A2E"
+            android:textColor="@color/primary"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="12dp" />
 
@@ -265,7 +265,7 @@
                         android:text="📦 Inventory"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:id="@+id/tvInventoryStatus"
@@ -301,7 +301,7 @@
                         android:text="💰 Finance"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -336,7 +336,7 @@
                         android:text="👥 Customers"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:id="@+id/tvTotalCustomers"
@@ -372,7 +372,7 @@
                         android:text="🏭 Suppliers"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:id="@+id/tvPendingSuppliers"
@@ -407,7 +407,7 @@
                         android:text="📊 Reports"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -447,7 +447,7 @@
                         android:text="⚠️ Alerts"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:id="@+id/tvAlertsCount"
@@ -470,7 +470,7 @@
             android:text="SALES &amp; POS"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#1A1A2E"
+            android:textColor="@color/primary"
             android:layout_marginBottom="12dp" />
 
         <LinearLayout
@@ -500,7 +500,7 @@
                         android:text="💰 Sale transactions"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -541,7 +541,7 @@
                         android:text="🔄 Refunds &amp; returns"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -570,7 +570,7 @@
             android:text="STAFF MANAGEMENT"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#1A1A2E"
+            android:textColor="@color/primary"
             android:layout_marginBottom="12dp" />
 
         <LinearLayout
@@ -600,7 +600,7 @@
                         android:text="👤 Staff accounts"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -641,7 +641,7 @@
                         android:text="🔐 Roles &amp; permissions"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -661,7 +661,7 @@
             android:text="FINANCE &amp; ACCOUNTING"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#1A1A2E"
+            android:textColor="@color/primary"
             android:layout_marginBottom="12dp" />
 
         <LinearLayout
@@ -691,7 +691,7 @@
                         android:text="📊 Revenue &amp; P&amp;L"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -723,7 +723,7 @@
                         android:text="📉 Expense management"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#1A1A2E" />
+                        android:textColor="@color/primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
