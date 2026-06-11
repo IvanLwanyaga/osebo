@@ -1,81 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Main content area (scrollable) -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F8FAFC">
 
-        <!-- Logo -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="73dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/osebo" />
+            <!-- Logo -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="73dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/osebo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Osebo"
+                    android:textColor="#111827"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Heading -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Osebo"
-                android:textColor="#111827"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:text="Streamline,\nAutomate,\nGrow!"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                android:textColor="#0F6CBD"
+                android:layout_marginTop="50dp"/>
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="An all-in-one ERP solution designed for African businesses."
+                android:textSize="18sp"
+                android:textColor="#64748B"
+                android:layout_marginTop="20dp"/>
+
+            <!-- Image -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="30dp"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="fitCenter"/>
+
+            <!-- Button -->
+            <Button
+                android:id="@+id/btnGetStarted"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="40dp"
+                android:text="Get Started"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#0F6CBD"/>
+
         </LinearLayout>
 
-        <!-- Heading -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Streamline,\nAutomate,\nGrow!"
-            android:textSize="42sp"
-            android:textStyle="bold"
-            android:textColor="#0F6CBD"
-            android:layout_marginTop="50dp"/>
+    </androidx.core.widget.NestedScrollView>
 
-        <!-- Description -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="An all-in-one ERP solution designed for African businesses."
-            android:textSize="18sp"
-            android:textColor="#64748B"
-            android:layout_marginTop="20dp"/>
+    <!-- BOTTOM NAVIGATION BAR - This is what you need -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
 
-        <!-- Image -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="30dp"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="fitCenter"/>
-
-        <!-- Button -->
-        <Button
-            android:id="@+id/btnGetStarted"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="40dp"
-            android:text="Get Started"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#0F6CBD"/>
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

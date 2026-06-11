@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Title *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="First Name *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="Last Name *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="Email Address *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
@@ -194,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="Phone Number *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
@@ -251,27 +251,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="Password *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintTop_toBottomOf="@id/phoneLayout" />
 
         <!-- PASSWORD -->
-        <EditText
-            android:id="@+id/editTextTextPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input_box"
-            android:hint="Enter password"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="16sp"
+            app:endIconMode="password_toggle"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintEnd_toEndOf="@id/rightGuide"
-            app:layout_constraintTop_toBottomOf="@id/tvPassword" />
+            app:layout_constraintTop_toBottomOf="@id/tvPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_input_box"
+                android:hint="Enter password"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- CONFIRM PASSWORD LABEL -->
         <TextView
@@ -280,29 +288,37 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="Confirm Password *"
-            android:textColor="@color/textDark"
+            android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
-            app:layout_constraintTop_toBottomOf="@id/editTextTextPassword" />
+            app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
         <!-- CONFIRM PASSWORD -->
-        <EditText
-            android:id="@+id/editTextTextPassword2"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConfirmPassword"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="18dp"
-            android:background="@drawable/bg_input_box"
-            android:hint="Re-enter password"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="16sp"
+            app:endIconMode="password_toggle"
+            app:hintEnabled="false"
             app:layout_constraintBottom_toTopOf="@+id/cbTerms"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintEnd_toEndOf="@id/rightGuide"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword" />
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTextPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_input_box"
+                android:hint="Re-enter password"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- TERMS -->
         <CheckBox
@@ -316,7 +332,7 @@
             android:paddingStart="8dp"
             app:layout_constraintStart_toStartOf="@id/leftGuide"
             app:layout_constraintEnd_toEndOf="@id/rightGuide"
-            app:layout_constraintTop_toBottomOf="@id/editTextTextPassword2" />
+            app:layout_constraintTop_toBottomOf="@id/tilConfirmPassword" />
         <!-- ACTION BUTTONS -->
         <LinearLayout
             android:id="@+id/registerActions"
