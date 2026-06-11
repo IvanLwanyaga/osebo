@@ -1,256 +1,523 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bg_page">
-
+    <!--  Top App Bar  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
-        android:padding="20dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="20dp"
         android:paddingTop="48dp"
+        android:paddingBottom="12dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:elevation="4dp">
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="8dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
             android:src="@drawable/ic_arrow_right"
             android:rotation="180"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
             app:tint="@color/text_primary"/>
-
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
             android:text="Account Settings"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_toggle"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="Edit"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+            app:strokeColor="@color/primary"
+            android:textColor="@color/primary"/>
     </LinearLayout>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
-
-            <!-- Profile Header -->
-            <com.google.android.material.card.MaterialCardView
+            android:paddingBottom="40dp">
+            <!--  Profile Header Card  -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/border">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/img_profile"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@drawable/user_avatar"
-                            app:shapeAppearanceOverlay="@style/CircleImage"
-                            android:scaleType="centerCrop"
-                            app:strokeWidth="3dp"
-                            app:strokeColor="@color/primary"/>
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_edit_photo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|end"
-                            app:fabSize="mini"
-                            android:src="@drawable/ic_add"
-                            app:backgroundTint="@color/primary"
-                            app:tint="@color/white"/>
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/txt_name"
+                android:background="@color/surface"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="28dp"
+                android:paddingBottom="28dp">
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="104dp"
+                        android:layout_height="104dp"
+                        android:src="@drawable/user_avatar"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/CircleImage"
+                        app:strokeWidth="3dp"
+                        app:strokeColor="@color/primary"/>
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_edit_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Osebo User"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"/>
+                        android:layout_gravity="bottom|end"
+                        android:src="@drawable/ic_add"
+                        android:visibility="gone"
+                        app:fabSize="mini"
+                        app:backgroundTint="@color/primary"
+                        app:tint="@color/white"
 
-                    <TextView
-                        android:id="@+id/txt_account_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Active Account"
-                        android:textColor="@color/success"
-                        android:textSize="12sp"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp"
-                android:text="Personal Information"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:textSize="12sp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxCornerRadiusTopStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusBottomEnd="16dp"
-                android:hint="Full Name"
-                app:startIconDrawable="@drawable/ic_person">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_display_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxCornerRadiusTopStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusBottomEnd="16dp"
-                android:hint="Email Address"
-                app:startIconDrawable="@drawable/ic_email">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxCornerRadiusTopStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusBottomEnd="16dp"
-                android:hint="Phone Number"
-                app:startIconDrawable="@drawable/ic_phone">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_update"
-                android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:layout_marginTop="8dp"
-                android:text="Save Changes"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                app:cornerRadius="16dp"/>
-
-            <!-- Security Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="12dp"
-                android:text="Security"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:textSize="12sp"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardChangePassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/border"
-                android:clickable="true"
-                android:focusable="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
+                        app:elevation="4dp"/>
+                </FrameLayout>
+                <TextView android:id="@+id/txt_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:layout_marginTop="14dp"
+                    android:text="Osebo User"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"/>
+                <TextView
+                    android:id="@+id/txt_email_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="user@example.com"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary"/>
+                <!--  Status Badge  -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_badge_success"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_support"
-                        app:tint="@color/primary"/>
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/circle_green"
+                        android:layout_marginEnd="6dp"/>
+                    <TextView android:id="@+id/txt_account_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Active Account"
+                        android:textColor="@color/success"
+                        android:textSize="11sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--  Divider  -->
+            <View android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/bg_page"/>
+            <!--  ===== PERSONAL INFORMATION SECTION =====  -->
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:background="@color/surface">
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PERSONAL INFORMATION"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_secondary"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.12"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="16dp"/>
+                <!--  Full Name  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_display_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Full Name"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/text_secondary"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Username  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_username"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Username"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/text_secondary"
+                    app:prefixText=""
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="text"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Email  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Email Address"
+                    app:startIconDrawable="@drawable/ic_email"
+                    app:startIconTint="@color/text_secondary"
+                    app:boxCornerRadiusTopStart="14dp" app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp" app:boxCornerRadiusBottomEnd="14dp">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_email" android:layout_width="match_parent" android:layout_height="wrap_content" android:enabled="false" android:inputType="textEmailAddress" android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Phone  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="14dp"
+                    android:gravity="center_vertical">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_showFullName="false"
+                        app:ccp_showNameCode="true"
+                        app:ccp_defaultCountryCode="UG"
+                        app:ccp_showphonecode="true"
+                        app:ccp_showFlag="true"
+                        app:ccp_textSize="15sp"
+                        app:ccp_contentColor="@color/text_primary"
+                        app:ccp_clickable="false"
+                        android:padding="8dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_phone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:inputType="phone"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <!--  Date of Birth  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_dob"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Date of Birth"
+                    app:startIconDrawable="@drawable/ic_calendar"
+                    app:startIconTint="@color/text_secondary"
+                    app:endIconMode="none"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Gender Dropdown  -->
+                <com.google.android.material.textfield.TextInputLayout android:id="@+id/til_gender" style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp" android:hint="Gender" app:startIconDrawable="@drawable/ic_person" app:startIconTint="@color/text_secondary" app:boxCornerRadiusTopStart="14dp" app:boxCornerRadiusTopEnd="14dp" app:boxCornerRadiusBottomStart="14dp" app:boxCornerRadiusBottomEnd="14dp">
+                    <AutoCompleteTextView android:id="@+id/et_gender" android:layout_width="match_parent" android:layout_height="wrap_content" android:enabled="false" android:focusable="false" android:inputType="none" android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Bio / About  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_bio"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Bio" app:counterEnabled="true"
+                    app:counterMaxLength="150" app:startIconDrawable="@drawable/bio"
+                    app:startIconTint="@color/text_secondary"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="textMultiLine"
+                        android:lines="3"
+                        android:maxLines="5"
+                        android:gravity="top"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Save Button (hidden until edit mode)  -->
+                <com.google.android.material.button.MaterialButton android:id="@+id/btn_save_personal" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginBottom="20dp" android:text="Save Changes" android:textAllCaps="false" android:textStyle="bold" android:textSize="15sp" android:visibility="gone" app:cornerRadius="14dp" app:icon="@drawable/ic_add" app:iconGravity="textStart"/>
+            </LinearLayout>
+            <!--  Divider  -->
+            <View android:layout_width="match_parent" android:layout_height="8dp" android:background="@color/bg_page"/>
+            <!--  ===== ADDRESS SECTION =====  -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="20dp" android:paddingEnd="20dp" android:paddingTop="20dp" android:background="@color/surface">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="16dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="ADDRESS" android:textStyle="bold" android:textColor="@color/text_secondary" android:textAllCaps="true" android:letterSpacing="0.12" android:textSize="11sp"/>
+                    <ImageView android:id="@+id/ic_address_section" android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_arrow_right" android:rotation="90" app:tint="@color/text_secondary"/>
+                </LinearLayout>
+                <!--  Country  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_country"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp" android:hint="Country" app:startIconDrawable="@drawable/country" app:startIconTint="@color/text_secondary" app:boxCornerRadiusTopStart="14dp" app:boxCornerRadiusTopEnd="14dp" app:boxCornerRadiusBottomStart="14dp" app:boxCornerRadiusBottomEnd="14dp">
+                    <AutoCompleteTextView
+                        android:id="@+id/et_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:enabled="false" android:focusable="false" android:inputType="none" android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  City  -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_city"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="City"
+                    app:startIconDrawable="@drawable/city"
+                    app:startIconTint="@color/text_secondary"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--  Street Address  -->
+                <com.google.android.material.textfield.TextInputLayout android:id="@+id/til_address" style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="20dp" android:hint="Street Address" app:startIconDrawable="@drawable/street" app:startIconTint="@color/text_secondary" app:boxCornerRadiusTopStart="14dp" app:boxCornerRadiusTopEnd="14dp" app:boxCornerRadiusBottomStart="14dp" app:boxCornerRadiusBottomEnd="14dp">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_address" android:layout_width="match_parent" android:layout_height="wrap_content" android:enabled="false" android:inputType="textPostalAddress" android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <!--  Divider  -->
+            <View android:layout_width="match_parent" android:layout_height="8dp" android:background="@color/bg_page"/>
+            <!--  ===== NOTIFICATIONS SECTION =====  -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="20dp" android:paddingEnd="20dp" android:paddingTop="20dp" android:paddingBottom="8dp" android:background="@color/surface">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="NOTIFICATIONS" android:textStyle="bold" android:textColor="@color/text_secondary" android:textAllCaps="true" android:letterSpacing="0.12" android:textSize="11sp" android:layout_marginBottom="16dp"/>
+                <!--  Push Notifications  -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingBottom="14dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Push Notifications" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Receive app alerts and reminders" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switch_push" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border"/>
+                <!--  Email Notifications  -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingTop="14dp" android:paddingBottom="14dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Email Notifications" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Updates sent to your email" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switch_email" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border"/>
+                <!--  SMS Notifications  -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingTop="14dp" android:paddingBottom="20dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SMS Notifications" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Receive text messages on your phone" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switch_sms" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--  Divider  -->
+            <View android:layout_width="match_parent" android:layout_height="8dp" android:background="@color/bg_page"/>
+            <!--  ===== PRIVACY SECTION =====  -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="20dp" android:paddingEnd="20dp" android:paddingTop="20dp" android:paddingBottom="8dp" android:background="@color/surface">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PRIVACY" android:textStyle="bold" android:textColor="@color/text_secondary" android:textAllCaps="true" android:letterSpacing="0.12" android:textSize="11sp" android:layout_marginBottom="16dp"/>
+                <!--  Profile Visibility  -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingBottom="14dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Public Profile" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Anyone can view your profile" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switch_public_profile" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border"/>
+                <!--  Activity Status  -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingTop="14dp" android:paddingBottom="20dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Show Activity Status" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Let others see when you're online" android:textSize="12sp" android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switch_activity" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--  Divider  -->
+            <View android:layout_width="match_parent" android:layout_height="8dp" android:background="@color/bg_page"/>
+            <!--  ===== SECURITY SECTION =====  -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="20dp" android:paddingEnd="20dp" android:paddingTop="20dp" android:paddingBottom="8dp" android:background="@color/surface">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SECURITY" android:textStyle="bold" android:textColor="@color/text_secondary" android:textAllCaps="true" android:letterSpacing="0.12" android:textSize="11sp" android:layout_marginBottom="12dp"/>
+                <!--  Change Password Row  -->
+                <LinearLayout android:id="@+id/row_change_password" android:layout_width="match_parent" android:layout_height="56dp" android:orientation="horizontal" android:gravity="center_vertical" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/change_password" app:tint="@color/primary"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="16dp" android:text="Change Password" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_arrow_right" app:tint="@color/text_secondary"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border" android:layout_marginStart="38dp"/>
+                <!--  Two-Factor Auth Row  -->
+                <LinearLayout android:id="@+id/row_two_factor" android:layout_width="match_parent" android:layout_height="56dp" android:orientation="horizontal" android:gravity="center_vertical" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_two_factor" app:tint="@color/primary"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="16dp" android:text="Two-Factor Authentication" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                    <TextView android:id="@+id/txt_2fa_status" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="Off" android:textSize="12sp" android:textColor="@color/text_secondary"/>
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_arrow_right" app:tint="@color/text_secondary"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border" android:layout_marginStart="38dp"/>
+                <!--  Connected Devices Row  -->
+                <LinearLayout android:id="@+id/row_devices" android:layout_width="match_parent" android:layout_height="56dp" android:orientation="horizontal" android:gravity="center_vertical" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:layout_marginBottom="8dp">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/manage_devices" app:tint="@color/primary"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="16dp" android:text="Manage Devices" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_arrow_right" app:tint="@color/text_secondary"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--  Divider  -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/bg_page"/>
+            <!--  ===== PREFERENCES SECTION =====  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="8dp"
+                android:background="@color/surface">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PREFERENCES"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_secondary"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.12"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="12dp"/>
+                <!--  Language Row  -->
+                <LinearLayout android:id="@+id/row_language" android:layout_width="match_parent" android:layout_height="56dp" android:orientation="horizontal" android:gravity="center_vertical" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/language" app:tint="@color/primary"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="16dp" android:text="Language" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"/>
+                    <TextView android:id="@+id/txt_language" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="English" android:textSize="13sp" android:textColor="@color/text_secondary"/>
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_arrow_right" app:tint="@color/text_secondary"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border" android:layout_marginStart="38dp"/>
+                <!--  Dark Mode Row  -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/dark_mode" app:tint="@color/primary"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="16dp"
-                        android:text="Change Password"
+                        android:text="Dark Mode"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary"/>
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_arrow_right"
-                        app:tint="@color/border"/>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_dark_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"/>
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="24dp"
-                android:background="@color/border"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_logout"
-                android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:text="Log Out"
-                android:textAllCaps="false"
-                android:textColor="@color/danger"
-                app:backgroundTint="@color/surface"
-                app:strokeColor="@color/danger"
-                app:strokeWidth="1dp"
-                app:cornerRadius="16dp"
-                app:icon="@drawable/ic_logout"
-                app:iconTint="@color/danger"/>
-
+            </LinearLayout>
+            <!--  Divider  -->
+            <View android:layout_width="match_parent" android:layout_height="8dp" android:background="@color/bg_page"/>
+            <!--  ===== DANGER ZONE =====  -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="20dp" android:paddingEnd="20dp" android:paddingTop="20dp" android:paddingBottom="20dp" android:background="@color/surface">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ACCOUNT ACTIONS" android:textStyle="bold" android:textColor="@color/text_secondary" android:textAllCaps="true" android:letterSpacing="0.12" android:textSize="11sp" android:layout_marginBottom="16dp"/>
+                <!--  Log Out Button  -->
+                <com.google.android.material.button.MaterialButton android:id="@+id/btn_logout" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginBottom="12dp" android:text="Log Out" android:textAllCaps="false" android:textStyle="bold" android:textSize="15sp" android:textColor="@color/text_primary" app:strokeColor="@color/border" app:strokeWidth="1dp" app:cornerRadius="14dp" app:icon="@drawable/ic_logout" app:iconTint="@color/text_primary" app:iconGravity="textStart"/>
+                <!--  Delete Account Button  -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_delete_account"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:text="Delete Account"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/danger"
+                    app:strokeColor="@color/danger"
+                    app:strokeWidth="1dp" app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="@color/danger" app:iconGravity="textStart"/>
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </LinearLayout>
