@@ -27,9 +27,9 @@ class TransactionAdapter(private val transactions: List<Sale>) :
         val sale = transactions[position]
         val sdf = SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault())
         
-        holder.binding.txtDate.text = sdf.format(Date(sale.createdAt))
-        holder.binding.txtType.text = "SALE"
-        holder.binding.txtAmount.text = "UGX ${String.format("%,.0f", sale.totalAmount)}"
+        holder.binding.time.text = sdf.format(Date(sale.createdAt))
+        holder.binding.title.text = "SALE #${sale.id.takeLast(6)}"
+        holder.binding.amount.text = "UGX ${String.format("%,.0f", sale.totalAmount)}"
     }
 
     override fun getItemCount() = transactions.size

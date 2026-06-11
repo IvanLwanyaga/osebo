@@ -1,5 +1,6 @@
 package com.osebo.ai
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -57,7 +58,9 @@ class SalesActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         salesAdapter = SaleAdapter(filteredSalesList) { sale ->
-            // show detail
+            val intent = Intent(this, SaleReceiptActivity::class.java)
+            intent.putExtra("SALE_ID", sale.id)
+            startActivity(intent)
         }
 
         binding.recyclerSales.apply {

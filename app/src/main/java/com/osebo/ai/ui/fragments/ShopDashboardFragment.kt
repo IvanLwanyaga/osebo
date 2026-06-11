@@ -217,7 +217,11 @@ class ShopDashboardFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        shopAdapter = ShopAdapter(shopList)
+        shopAdapter = ShopAdapter(shopList) { shop ->
+            val intent = Intent(requireContext(), ShopOperationalActivity::class.java)
+            intent.putExtra("SHOP_ID", shop.id)
+            startActivity(intent)
+        }
         binding.recyclerShops.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = shopAdapter

@@ -179,7 +179,15 @@ class ShopOperationalActivity : AppCompatActivity() {
 
             if (name.isNotEmpty() && cost > 0) {
                 val expenseId = UUID.randomUUID().toString()
-                val expense = Expense(expenseId, name, cat, cost, desc, shopId ?: "")
+                val expense = Expense(
+                    id = expenseId,
+                    name = name,
+                    category = cat,
+                    cost = cost,
+                    amount = cost,
+                    description = desc,
+                    shopId = shopId ?: ""
+                )
                 db.collection("expenses").document(expenseId).set(expense)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Expense added", Toast.LENGTH_SHORT).show()

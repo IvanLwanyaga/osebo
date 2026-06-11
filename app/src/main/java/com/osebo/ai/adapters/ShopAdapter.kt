@@ -9,29 +9,26 @@ import com.osebo.ai.R
 import com.osebo.ai.models.Shop
 
 class ShopAdapter(
-    private val shopList: List<Shop>
+    private val shopList: List<Shop>,
+    private val onShopClick: (Shop) -> Unit
 ) : RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
 
     class ShopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val txtShopName: TextView = itemView.findViewById(R.id.txtShopName)
         val txtLocation: TextView = itemView.findViewById(R.id.txtLocation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder {
-
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_shop, parent, false)
-
         return ShopViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
-
         val shop = shopList[position]
-
         holder.txtShopName.text = shop.name
         holder.txtLocation.text = shop.address
+        holder.itemView.setOnClickListener { onShopClick(shop) }
     }
 
     override fun getItemCount(): Int = shopList.size

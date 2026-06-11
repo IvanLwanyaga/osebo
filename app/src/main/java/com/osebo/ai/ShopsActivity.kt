@@ -34,7 +34,11 @@ class ShopsActivity : AppCompatActivity() {
     private fun setupUI() {
         binding.btnBack.setOnClickListener { finish() }
 
-        shopAdapter = ShopAdapter(shopList)
+        shopAdapter = ShopAdapter(shopList) { shop ->
+            val intent = Intent(this, ShopOperationalActivity::class.java)
+            intent.putExtra("SHOP_ID", shop.id)
+            startActivity(intent)
+        }
         binding.recyclerShops.layoutManager = LinearLayoutManager(this)
         binding.recyclerShops.adapter = shopAdapter
 
@@ -55,6 +59,7 @@ class ShopsActivity : AppCompatActivity() {
                 value?.documents?.forEach { doc ->
                     val shop = doc.toObject(Shop::class.java)
                     if (shop != null) {
+                        shop.id = doc.id
                         shopList.add(shop)
                     }
                 }
