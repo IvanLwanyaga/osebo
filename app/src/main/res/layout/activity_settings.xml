@@ -268,7 +268,9 @@
                     android:hint="Date of Birth"
                     app:startIconDrawable="@drawable/ic_calendar"
                     app:startIconTint="@color/text_secondary"
-                    app:endIconMode="none"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_calendar"
+                    app:endIconTint="@color/primary"
                     app:boxCornerRadiusTopStart="14dp"
                     app:boxCornerRadiusTopEnd="14dp"
                     app:boxCornerRadiusBottomStart="14dp"
@@ -279,6 +281,7 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:focusable="false"
+                        android:clickable="true"
                         android:inputType="none"
                         android:textSize="15sp"/>
                 </com.google.android.material.textfield.TextInputLayout>

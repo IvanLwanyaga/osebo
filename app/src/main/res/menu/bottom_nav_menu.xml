@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Home -->
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
         android:title="Home"
-        android:checked="true"/>
+        android:checked="true" />
 
+    <!-- Sales -->
     <item
         android:id="@+id/nav_sales"
         android:icon="@drawable/ic_sales"
-        android:title="Sales"/>
+        android:title="Sales" />
 
+    <!-- Finance -->
+    <item
+        android:id="@+id/nav_finance"
+        android:icon="@drawable/ic_finance"
+        android:title="Finance" />
+
+    <!-- Inventory -->
     <item
         android:id="@+id/nav_inventory"
         android:icon="@drawable/ic_inventory"
-        android:title="Inventory"/>
+        android:title="Inventory" />
 
-    <item
-        android:id="@+id/nav_reports"
-        android:icon="@drawable/ic_report"
-        android:title="Reports"/>
-
-    <item
-        android:id="@+id/nav_account"
-        android:icon="@drawable/ic_more"
-        android:iconTint="@color/black"
-        android:title="More"/>
 </menu>
