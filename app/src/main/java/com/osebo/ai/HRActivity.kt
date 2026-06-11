@@ -1,5 +1,6 @@
 package com.osebo.ai
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -166,13 +167,6 @@ class HRActivity : AppCompatActivity() {
             showToast("Refunds & Returns - Coming Soon")
         }
 
-        findViewById<CardView>(R.id.cardDiscounts).setOnClickListener {
-            showDiscountDialog()
-        }
-
-        findViewById<CardView>(R.id.cardLoyalty).setOnClickListener {
-            showToast("Loyalty Programme - Coming Soon")
-        }
 
         findViewById<CardView>(R.id.cardStaffAccounts).setOnClickListener {
             showToast("Staff Accounts - Coming Soon")
@@ -182,65 +176,22 @@ class HRActivity : AppCompatActivity() {
             showToast("Roles & Permissions - Coming Soon")
         }
 
-        findViewById<CardView>(R.id.cardShifts).setOnClickListener {
-            showToast("Shifts & Attendance - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardStaffPerformance).setOnClickListener {
-            showToast("Staff Performance - Coming Soon")
-        }
 
         findViewById<CardView>(R.id.cardRevenue).setOnClickListener {
             showToast("Revenue & P&L - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardCashDrawer).setOnClickListener {
-            showToast("Cash Drawer - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardTax).setOnClickListener {
-            showToast("Tax Configuration - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardPaymentMethods).setOnClickListener {
-            showToast("Payment Methods - Coming Soon")
         }
 
         findViewById<CardView>(R.id.cardExpense).setOnClickListener {
             showExpenseDialog()
         }
 
-        findViewById<CardView>(R.id.cardProductCatalogue).setOnClickListener {
-            showToast("Product Catalogue - Coming Soon")
-        }
-
         findViewById<CardView>(R.id.cardLowStockStat).setOnClickListener {
             showLowStockDialog()
         }
-
-        findViewById<CardView>(R.id.cardStockAdjustments).setOnClickListener {
-            showToast("Stock Adjustments - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardBarcode).setOnClickListener {
-            showToast("Barcode Management - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardSalesAnalytics).setOnClickListener {
-            showToast("Sales Analytics - Coming Soon")
-        }
-
-        findViewById<CardView>(R.id.cardCustomerInsights).setOnClickListener {
-            showToast("Customer Insights - Coming Soon")
-        }
-
         findViewById<CardView>(R.id.cardClearData).setOnClickListener {
             showClearDataConfirmation()
         }
 
-        findViewById<CardView>(R.id.cardSignOut).setOnClickListener {
-            showSignOutConfirmation()
-        }
     }
 
     private fun showAlertsDialog() {
@@ -288,7 +239,7 @@ class HRActivity : AppCompatActivity() {
 
                 AlertDialog.Builder(this@HRActivity)
                     .setTitle("Low Stock Items (${products.size})")
-                    .setItems(productNames) { which, _ ->
+                    .setItems(productNames) { _, which ->
                         val product = products[which]
                         AlertDialog.Builder(this@HRActivity)
                             .setTitle("Reorder ${product.name}")
@@ -306,6 +257,12 @@ class HRActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    private fun setItems(
+        items: Array<String>,
+        listener: (DialogInterface, Int) -> Unit
+    ) {
     }
 
     private fun showDiscountDialog() {
