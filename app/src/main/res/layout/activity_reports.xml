@@ -341,6 +341,7 @@
 
                 <!-- Average Order Card -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAverageOrder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -377,6 +378,7 @@
 
                 <!-- Conversion Rate Card -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardConversion"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
