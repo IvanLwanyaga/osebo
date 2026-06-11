@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Osebo">
-        <activity
-            android:name=".SaleActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".SalesActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ShopsActivity"
             android:exported="false" /> <!-- SPLASH (ENTRY POINT) -->
@@ -55,6 +55,8 @@
         <activity android:name=".CreateUserActivity" />
         <activity android:name=".EmployeeActivity" />
         <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".DevicesActivity" />
     </application>
 
 </manifest>
